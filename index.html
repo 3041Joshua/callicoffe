@@ -3,21 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
 <link rel="icon" type="image/jpeg" href="LOGO.jpeg">
 <title>CALLI | Café • Bar</title>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
 :root {
@@ -32,663 +27,248 @@ html { scroll-behavior: smooth; }
   --white: #ffffff;
 }
 
-body {
-  font-family: 'Montserrat', sans-serif;
-  background: var(--cream);
-  color: var(--dark);
-  overflow-x: hidden;
-}
-
+body { font-family: 'Montserrat', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-thumb { background: var(--brown); border-radius: 99px; }
 
-/* ---- HEADER ---- */
-
 header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 997;
+  position: fixed; top: 0; width: 100%; z-index: 997;
   background: rgba(246,237,230,.88);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(140,91,67,.1);
 }
 
-.nav {
-  max-width: 1400px;
-  margin: auto;
-  padding: 22px 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+.nav { max-width: 1400px; margin: auto; padding: 22px 5%; display: flex; justify-content: space-between; align-items: center; }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  text-decoration: none;
-}
+.logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.logo-img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--brown); }
+.logo h1 { font-size: 1.9rem; font-family: 'Cormorant Garamond', serif; color: var(--brown); letter-spacing: 4px; }
 
-.logo-img {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--brown);
-}
-
-.logo h1 {
-  font-size: 1.9rem;
-  font-family: 'Cormorant Garamond', serif;
-  color: var(--brown);
-  letter-spacing: 4px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 38px;
-  align-items: center;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: var(--dark);
-  font-size: .88rem;
-  font-weight: 500;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  position: relative;
-  transition: color .3s;
-}
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px; left: 0;
-  width: 0; height: 1.5px;
-  background: var(--green);
-  transition: width .3s;
-}
-
+.nav-links { display: flex; gap: 38px; align-items: center; }
+.nav-links a { text-decoration: none; color: var(--dark); font-size: .88rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; position: relative; transition: color .3s; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1.5px; background: var(--green); transition: width .3s; }
 .nav-links a:hover { color: var(--green); }
 .nav-links a:hover::after { width: 100%; }
 
-/* ---- HERO ---- */
+/* ── PANEL COMPARTIR ── */
+.share-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1001; opacity: 0; pointer-events: none; transition: opacity .3s; backdrop-filter: blur(4px); }
+.share-overlay.active { opacity: 1; pointer-events: all; }
+.share-panel { position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%); width: 100%; max-width: 440px; background: white; border-radius: 28px 28px 0 0; z-index: 1002; padding: 28px 28px 40px; transition: bottom .4s cubic-bezier(.16,1,.3,1); }
+.share-panel.active { bottom: 0; }
+.share-panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.share-panel-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--brown); }
+.share-qr-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 24px; }
+.share-qr-wrap canvas { border-radius: 16px; border: 6px solid var(--cream); }
+.share-url { font-size: .75rem; color: var(--muted); word-break: break-all; text-align: center; background: var(--cream); padding: 8px 14px; border-radius: 99px; }
+.share-apps { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.share-app-btn { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-radius: 14px; cursor: pointer; font-weight: 600; font-size: .85rem; font-family: 'Montserrat', sans-serif; transition: .2s; text-decoration: none; color: white; }
+.share-app-btn.whatsapp { background: #25D366; }
+.share-app-btn.instagram { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
+.share-app-btn.facebook { background: #1877f2; }
+.share-app-btn.copiar { background: var(--dark); }
+.share-app-btn:hover { opacity: .88; transform: scale(1.02); }
 
 .hero {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 5%;
-  background:
-    linear-gradient(160deg, rgba(0,0,0,.55), rgba(0,0,0,.45)),
-    url("imagenes/hero.jpg")
-    center / cover no-repeat;
+  height: 100vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 0 5%;
+  background: linear-gradient(160deg, rgba(0,0,0,.55), rgba(0,0,0,.45)), url("imagenes/hero.jpg") center / cover no-repeat;
 }
-
 .hero-content { max-width: 860px; }
-
-.hero h2 {
-  font-size: clamp(4rem, 10vw, 8rem);
-  font-family: 'Cormorant Garamond', serif;
-  color: white;
-  letter-spacing: 8px;
-  line-height: .95;
-}
-
-.hero h2 em {
-  display: block;
-  font-size: 60%;
-  font-style: italic;
-  font-weight: 400;
-  opacity: .85;
-  letter-spacing: 10px;
-  margin-top: 10px;
-}
-
-.hero p {
-  margin-top: 20px;
-  color: rgba(255,255,255,.8);
-  line-height: 1.8;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero-actions {
-  margin-top: 40px;
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.hero-btn {
-  padding: 15px 35px;
-  border-radius: 99px;
-  background: var(--brown);
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: .88rem;
-  letter-spacing: 1px;
-  transition: .35s;
-}
-
+.hero h2 { font-size: clamp(4rem, 10vw, 8rem); font-family: 'Cormorant Garamond', serif; color: white; letter-spacing: 8px; line-height: .95; }
+.hero h2 em { display: block; font-size: 60%; font-style: italic; font-weight: 400; opacity: .85; letter-spacing: 10px; margin-top: 10px; }
+.hero p { margin-top: 20px; color: rgba(255,255,255,.8); line-height: 1.8; max-width: 500px; margin-left: auto; margin-right: auto; }
+.hero-actions { margin-top: 40px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.hero-btn { padding: 15px 35px; border-radius: 99px; background: var(--brown); color: white; text-decoration: none; font-weight: 600; font-size: .88rem; letter-spacing: 1px; transition: .35s; }
 .hero-btn:hover { background: var(--green); transform: translateY(-3px); }
-
-.hero-btn.outline {
-  background: transparent;
-  border: 1.5px solid rgba(255,255,255,.5);
-}
-
+.hero-btn.outline { background: transparent; border: 1.5px solid rgba(255,255,255,.5); }
 .hero-btn.outline:hover { background: white; color: var(--dark); border-color: white; }
 
-/* ---- SECTION ---- */
-
 .section { padding: 120px 5%; }
+.section-title { text-align: center; margin-bottom: 60px; }
+.section-title h2 { font-size: 3rem; color: var(--brown); font-family: 'Cormorant Garamond', serif; }
+.section-title p { margin-top: 10px; color: var(--muted); font-size: .92rem; }
 
-.section-title {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.section-title h2 {
-  font-size: 3rem;
-  color: var(--brown);
-  font-family: 'Cormorant Garamond', serif;
-}
-
-.section-title p {
-  margin-top: 10px;
-  color: var(--muted);
-  font-size: .92rem;
-}
-
-/* ---- FILTERS ---- */
-
-.filters {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 50px;
-}
-
-.filter-btn {
-  padding: 11px 26px;
-  border-radius: 99px;
-  border: 1.5px solid rgba(0,0,0,.08);
-  cursor: pointer;
-  background: white;
-  font-weight: 600;
-  font-size: .82rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
-  color: var(--dark);
-  transition: .25s;
-}
-
+/* ── FILTROS PRINCIPALES ── */
+.filters { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.filter-btn { padding: 11px 26px; border-radius: 99px; border: 1.5px solid rgba(0,0,0,.08); cursor: pointer; background: white; font-weight: 600; font-size: .82rem; letter-spacing: 1px; text-transform: uppercase; font-family: 'Montserrat', sans-serif; color: var(--dark); transition: .25s; }
 .filter-btn:hover { background: var(--green); color: white; border-color: var(--green); }
 .filter-btn.active { background: var(--brown); color: white; border-color: var(--brown); }
 
-/* ---- MENU GRID ---- */
-
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
-}
-
-.card {
-  background: white;
-  border-radius: 24px;
+/* ── SUB-FILTROS DE BEBIDAS ── */
+.sub-filters-wrap {
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,.08);
-  transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height .45s ease, opacity .35s ease, margin .35s ease;
+  margin-bottom: 0;
 }
-
-.card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,.12); }
-
-.card-img-wrap {
-  height: 230px;
-  overflow: hidden;
-  position: relative;
+.sub-filters-wrap.visible {
+  max-height: 400px;
+  opacity: 1;
+  margin-bottom: 34px;
 }
-
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform .5s ease;
-  display: block;
-}
-
-.card:hover img { transform: scale(1.06); }
-
-.card-badge {
-  position: absolute;
-  top: 14px; left: 14px;
-  background: white;
-  border-radius: 99px;
-  padding: 5px 14px;
-  font-size: .72rem;
+.sub-filter-label {
+  text-align: center;
+  font-size: .7rem;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--green);
-  box-shadow: 0 4px 12px rgba(0,0,0,.12);
-}
-
-.card-content { padding: 25px; }
-
-.card h3 {
-  font-size: 1.7rem;
-  font-family: 'Cormorant Garamond', serif;
-  color: var(--dark);
-}
-
-.card p {
-  margin-top: 10px;
   color: var(--muted);
-  line-height: 1.7;
-  font-size: .88rem;
+  padding-top: 18px;
+  margin-bottom: 12px;
 }
-
-.card-bottom {
-  margin-top: 20px;
+.sub-filters {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 16px;
-  border-top: 1px solid rgba(0,0,0,.06);
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-bottom: 6px;
+  border-top: 1px dashed rgba(140,91,67,.2);
 }
-
-.price {
-  font-size: 1.5rem;
-  color: var(--brown);
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 700;
-}
-
-.add-btn {
-  padding: 11px 20px;
-  border: none;
-  background: var(--brown);
-  color: white;
-  border-radius: 12px;
+.sub-btn {
+  padding: 8px 20px;
+  border-radius: 99px;
+  border: 1.5px solid rgba(0,139,139,.3);
   cursor: pointer;
+  background: white;
   font-weight: 600;
-  font-size: .82rem;
+  font-size: .76rem;
+  letter-spacing: .8px;
+  text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
-  transition: .25s;
+  color: var(--green);
+  transition: .2s;
 }
+.sub-btn:hover { background: var(--green); color: white; border-color: var(--green); }
+.sub-btn.active { background: var(--green); color: white; border-color: var(--green); }
 
+/* separador antes del grid */
+.grid-gap { margin-bottom: 50px; }
+
+.menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+
+.card { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.08); transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s; }
+.card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,.12); }
+.card-img-wrap { height: 230px; overflow: hidden; position: relative; }
+.card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; display: block; }
+.card:hover img { transform: scale(1.06); }
+.card-badge { position: absolute; top: 14px; left: 14px; background: white; border-radius: 99px; padding: 5px 14px; font-size: .72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green); box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+.card-content { padding: 25px; }
+.card h3 { font-size: 1.7rem; font-family: 'Cormorant Garamond', serif; color: var(--dark); }
+.card p { margin-top: 10px; color: var(--muted); line-height: 1.7; font-size: .88rem; }
+
+/* ── OPCIONES ── */
+.opciones-wrap { margin-top: 16px; padding-top: 14px; border-top: 1px dashed rgba(0,0,0,.08); }
+.opciones-titulo { font-size: .72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.opciones-grupo { margin-bottom: 12px; }
+.opciones-grupo-label { font-size: .78rem; font-weight: 600; color: var(--dark); margin-bottom: 7px; }
+.opciones-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+
+.chip { padding: 6px 14px; border-radius: 99px; border: 1.5px solid rgba(0,0,0,.1); font-size: .76rem; font-weight: 600; font-family: 'Montserrat', sans-serif; cursor: pointer; background: white; color: var(--dark); transition: .2s; user-select: none; }
+.chip:hover { border-color: var(--brown); color: var(--brown); }
+.chip.selected { background: var(--brown); color: white; border-color: var(--brown); }
+.chip.radio.selected { background: var(--green); border-color: var(--green); color: white; }
+.chip.radio:hover { border-color: var(--green); color: var(--green); }
+.chip-price { opacity: .75; font-weight: 400; margin-left: 4px; }
+.chip.selected .chip-price { opacity: .9; }
+
+.card-bottom { margin-top: 20px; display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid rgba(0,0,0,.06); }
+.price { font-size: 1.5rem; color: var(--brown); font-family: 'Cormorant Garamond', serif; font-weight: 700; }
+.add-btn { padding: 11px 20px; border: none; background: var(--brown); color: white; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: .82rem; font-family: 'Montserrat', sans-serif; transition: .25s; }
 .add-btn:hover { background: var(--green); transform: scale(1.04); }
 .add-btn.added { background: var(--green); }
 
-/* ---- INFO ---- */
-
 .info-section { background: white; }
-
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-}
-
-.info-card {
-  padding: 40px;
-  background: var(--cream);
-  border-radius: 25px;
-}
-
-.info-card h3 {
-  font-size: 2rem;
-  color: var(--brown);
-  margin-bottom: 20px;
-  font-family: 'Cormorant Garamond', serif;
-}
-
-.info-card h3::after {
-  content: '';
-  display: block;
-  width: 36px;
-  height: 2px;
-  background: var(--green);
-  margin-top: 10px;
-}
-
-.info-card p {
-  line-height: 2;
-  color: #6f5d54;
-  font-size: .92rem;
-}
-
-.schedule-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px dashed rgba(0,0,0,.08);
-  font-size: .9rem;
-}
-
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.info-card { padding: 40px; background: var(--cream); border-radius: 25px; }
+.info-card h3 { font-size: 2rem; color: var(--brown); margin-bottom: 20px; font-family: 'Cormorant Garamond', serif; }
+.info-card h3::after { content: ''; display: block; width: 36px; height: 2px; background: var(--green); margin-top: 10px; }
+.info-card p { line-height: 2; color: #6f5d54; font-size: .92rem; }
+.schedule-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed rgba(0,0,0,.08); font-size: .9rem; }
 .schedule-row:last-child { border-bottom: none; }
 .schedule-day { font-weight: 600; }
 .schedule-time { color: var(--green); font-weight: 500; }
 
-/* ---- FOOTER ---- */
+footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; color: rgba(255,255,255,.5); }
+.footer-logo { font-size: 2.5rem; color: white; font-family: 'Cormorant Garamond', serif; letter-spacing: 6px; margin-bottom: 10px; }
+.footer-sub { font-size: .75rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: 32px; }
+.footer-social { display: flex; justify-content: center; gap: 16px; margin-bottom: 32px; }
+.social-link { display: flex; align-items: center; gap: 9px; padding: 11px 22px; border-radius: 99px; border: 1px solid rgba(255,255,255,.15); color: rgba(255,255,255,.7); text-decoration: none; font-size: .78rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; transition: .3s; }
+.social-link:hover { border-color: rgba(255,255,255,.5); color: white; transform: translateY(-3px); }
+.social-link.instagram:hover { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); border-color: transparent; }
+.social-link.facebook:hover { background: #1877f2; border-color: transparent; }
+.social-link svg { flex-shrink: 0; }
+.footer-copy { font-size: .8rem; border-top: 1px solid rgba(255,255,255,.1); padding-top: 24px; }
 
-footer {
-  padding: 60px 5% 40px;
-  background: var(--dark);
-  text-align: center;
-  color: rgba(255,255,255,.5);
-}
-
-.footer-logo {
-  font-size: 2.5rem;
-  color: white;
-  font-family: 'Cormorant Garamond', serif;
-  letter-spacing: 6px;
-  margin-bottom: 10px;
-}
-
-.footer-sub {
-  font-size: .75rem;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.35);
-  margin-bottom: 28px;
-}
-
-.footer-copy {
-  font-size: .8rem;
-  border-top: 1px solid rgba(255,255,255,.1);
-  padding-top: 24px;
-}
-
-/* ---- CART BUTTON ---- */
-
-.cart-btn {
-  position: fixed;
-  bottom: 30px; right: 30px;
-  width: 68px; height: 68px;
-  border-radius: 50%;
-  background: var(--brown);
-  color: white;
-  font-size: 1.4rem;
-  border: none;
-  cursor: pointer;
-  z-index: 996;
-  box-shadow: 0 10px 30px rgba(140,91,67,.4);
-  transition: .35s cubic-bezier(.34,1.56,.64,1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
+.cart-btn { position: fixed; bottom: 30px; right: 30px; width: 68px; height: 68px; border-radius: 50%; background: var(--brown); color: white; font-size: 1.4rem; border: none; cursor: pointer; z-index: 996; box-shadow: 0 10px 30px rgba(140,91,67,.4); transition: .35s cubic-bezier(.34,1.56,.64,1); display: flex; align-items: center; justify-content: center; }
 .cart-btn:hover { transform: scale(1.12); background: var(--green); }
-
-.cart-count {
-  position: absolute;
-  top: -4px; right: -4px;
-  width: 24px; height: 24px;
-  background: var(--green);
-  color: white;
-  border-radius: 50%;
-  font-size: .72rem;
-  font-weight: 700;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid white;
-}
-
+.cart-count { position: absolute; top: -4px; right: -4px; width: 24px; height: 24px; background: var(--green); color: white; border-radius: 50%; font-size: .72rem; font-weight: 700; display: none; align-items: center; justify-content: center; border: 2px solid white; }
 .cart-count.visible { display: flex; }
 
-/* ---- CART PANEL ---- */
-
-.cart-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.4);
-  z-index: 999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .4s;
-  backdrop-filter: blur(4px);
-}
-
+.cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 999; opacity: 0; pointer-events: none; transition: opacity .4s; backdrop-filter: blur(4px); }
 .cart-overlay.active { opacity: 1; pointer-events: all; }
 
-.cart {
-  position: fixed;
-  top: 0; right: -100%;
-  width: 440px;
-  max-width: 100%;
-  height: 100vh;
-  background: white;
-  z-index: 1000;
-  transition: right .45s cubic-bezier(.16,1,.3,1);
-  display: flex;
-  flex-direction: column;
-}
-
+.cart { position: fixed; top: 0; right: -100%; width: 440px; max-width: 100%; height: 100vh; background: white; z-index: 1000; transition: right .45s cubic-bezier(.16,1,.3,1); display: flex; flex-direction: column; }
 .cart.active { right: 0; }
-
-.cart-header {
-  padding: 32px 30px 24px;
-  border-bottom: 1px solid rgba(0,0,0,.07);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.cart-header h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2rem;
-  color: var(--brown);
-}
-
-.close-btn {
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  background: var(--cream);
-  border: none;
-  cursor: pointer;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: .2s;
-  color: var(--dark);
-}
-
+.cart-header { padding: 32px 30px 24px; border-bottom: 1px solid rgba(0,0,0,.07); display: flex; justify-content: space-between; align-items: center; }
+.cart-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--brown); }
+.close-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--cream); border: none; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; transition: .2s; color: var(--dark); }
 .close-btn:hover { background: var(--beige); }
-
-.cart-body {
-  flex: 1;
-  padding: 20px 30px;
-  overflow-y: auto;
-}
-
-.cart-empty {
-  text-align: center;
-  padding: 60px 0;
-  color: var(--muted);
-}
-
+.cart-body { flex: 1; padding: 20px 30px; overflow-y: auto; }
+.cart-empty { text-align: center; padding: 60px 0; color: var(--muted); }
 .cart-empty .icon { font-size: 3rem; margin-bottom: 16px; display: block; }
 .cart-empty p { font-size: .9rem; line-height: 1.7; }
 
-.cart-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(0,0,0,.06);
-}
-
+.cart-item { display: flex; align-items: flex-start; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,.06); }
 .cart-item-info { flex: 1; }
+.cart-item-info h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; }
+.cart-item-info .item-price { font-size: .88rem; color: var(--brown); font-weight: 600; margin-top: 3px; }
+.cart-item-info .item-opts { font-size: .78rem; color: var(--muted); margin-top: 4px; line-height: 1.6; }
 
-.cart-item-info h4 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem;
-}
-
-.cart-item-info .item-price {
-  font-size: .88rem;
-  color: var(--brown);
-  font-weight: 600;
-  margin-top: 3px;
-}
-
-.remove-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: .2s;
-  font-size: .9rem;
-  color: var(--muted);
-}
-
+.remove-btn { background: none; border: none; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: .2s; font-size: .9rem; color: var(--muted); flex-shrink: 0; }
 .remove-btn:hover { background: #ffe4e4; color: #e53e3e; }
 
-.cart-footer {
-  padding: 24px 30px 30px;
-  border-top: 1px solid rgba(0,0,0,.07);
-}
+.cart-footer { padding: 24px 30px 30px; border-top: 1px solid rgba(0,0,0,.07); }
+.total-line { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+.total-line span { font-size: .85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.total-line strong { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; color: var(--brown); }
 
-.total-line {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 22px;
-}
+.field { position: relative; margin-bottom: 12px; }
+.field label { position: absolute; top: 14px; left: 16px; font-size: .78rem; color: var(--muted); pointer-events: none; transition: .2s; }
+.field input, .field textarea { width: 100%; padding: 24px 16px 10px; border: 1.5px solid rgba(0,0,0,.09); background: var(--cream); border-radius: 14px; outline: none; font-family: 'Montserrat', sans-serif; font-size: .9rem; color: var(--dark); transition: border-color .2s; resize: none; }
+.field input:focus, .field textarea:focus { border-color: var(--brown); }
+.field input:focus ~ label, .field input:not(:placeholder-shown) ~ label, .field textarea:focus ~ label, .field textarea:not(:placeholder-shown) ~ label { top: 7px; font-size: .67rem; color: var(--brown); }
 
-.total-line span {
-  font-size: .85rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.total-line strong {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.9rem;
-  color: var(--brown);
-}
-
-.field {
-  position: relative;
-  margin-bottom: 12px;
-}
-
-.field label {
-  position: absolute;
-  top: 14px; left: 16px;
-  font-size: .78rem;
-  color: var(--muted);
-  pointer-events: none;
-  transition: .2s;
-}
-
-.field input, .field textarea {
-  width: 100%;
-  padding: 24px 16px 10px;
-  border: 1.5px solid rgba(0,0,0,.09);
-  background: var(--cream);
-  border-radius: 14px;
-  outline: none;
-  font-family: 'Montserrat', sans-serif;
-  font-size: .9rem;
-  color: var(--dark);
-  transition: border-color .2s;
-  resize: none;
-}
-
-.field input:focus,
-.field textarea:focus { border-color: var(--brown); }
-
-.field input:focus ~ label,
-.field input:not(:placeholder-shown) ~ label,
-.field textarea:focus ~ label,
-.field textarea:not(:placeholder-shown) ~ label {
-  top: 7px;
-  font-size: .67rem;
-  color: var(--brown);
-}
-
-
-.whatsapp-btn {
-  width: 100%;
-  padding: 17px;
-  margin-top: 8px;
-  border: none;
-  background: linear-gradient(135deg, #25D366, #1da851);
-  color: white;
-  font-weight: 700;
-  border-radius: 14px;
-  cursor: pointer;
-  font-size: .95rem;
-  font-family: 'Montserrat', sans-serif;
-  letter-spacing: .5px;
-  transition: .3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-
-
+.whatsapp-btn { width: 100%; padding: 17px; margin-top: 8px; border: none; background: linear-gradient(135deg, #25D366, #1da851); color: white; font-weight: 700; border-radius: 14px; cursor: pointer; font-size: .95rem; font-family: 'Montserrat', sans-serif; letter-spacing: .5px; transition: .3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
 .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(37,211,102,.35); }
 
-/* ---- TOAST ---- */
-
-.toast {
-  position: fixed;
-  bottom: 108px; right: 30px;
-  background: var(--dark);
-  color: white;
-  padding: 13px 20px;
-  border-radius: 14px;
-  font-size: .86rem;
-  font-weight: 500;
-  z-index: 9999;
-  transform: translateY(16px);
-  opacity: 0;
-  transition: .3s;
-  pointer-events: none;
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
-}
-
+.toast { position: fixed; bottom: 108px; right: 30px; background: var(--dark); color: white; padding: 13px 20px; border-radius: 14px; font-size: .86rem; font-weight: 500; z-index: 9999; transform: translateY(16px); opacity: 0; transition: .3s; pointer-events: none; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
 .toast.show { opacity: 1; transform: translateY(0); }
-
-/* ---- RESPONSIVE ---- */
 
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .hero h2 { font-size: 3.5rem; }
   .cart { width: 100%; }
+  .footer-social { flex-direction: column; align-items: center; }
+  .salsa-chip {
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 10px 14px !important;
+  border-radius: 14px !important;
+  min-width: 140px;
+}
+.chip-salsa-nombre { font-size: .78rem; font-weight: 600; line-height: 1.2; }
+.chip-picante { font-size: .9rem; letter-spacing: 1px; }
+.picante-label { font-size: .65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: .6; }
+.salsa-chip.selected .picante-label { opacity: .85; }
 }
 
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="nav">
     <a href="#" class="logo">
@@ -698,98 +278,128 @@ footer {
     <nav class="nav-links">
       <a href="#menu">Menú</a>
       <a href="#nosotros">Nosotros</a>
-      <a href="#horarios">Horarios</a>
+      <a href="#nosotros">Horarios</a>
+      <a href="#ubicacion">Ubicación</a>
     </nav>
   </div>
 </header>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-content">
     <h2>CALLI<em>Sabor &amp; Ambiente</em></h2>
     <p>Sabor, Ambiente y momentos que se disfrutan</p>
     <div class="hero-actions">
       <a href="#menu" class="hero-btn">Ver Menú</a>
-      <a href="#horarios" class="hero-btn outline">Horarios</a>
+      <a href="#nosotros" class="hero-btn outline">Horarios</a>
     </div>
   </div>
 </section>
 
-<!-- MENU -->
 <section class="section" id="menu">
   <div class="section-title">
     <h2>Nuestro Menú</h2>
     <p>Selecciona tus favoritos y ordénalos directo por WhatsApp</p>
   </div>
 
+  <!-- Filtros principales -->
   <div class="filters">
     <button class="filter-btn active" data-cat="todos">Todos</button>
-    <button class="filter-btn" data-cat="desayunos">Desayunos</button>
-    <button class="filter-btn" data-cat="snacks">Snacks</button>
-    <button class="filter-btn" data-cat="bebidas">Bebidas</button>
-    <button class="filter-btn" data-cat="antojitos">Antojitos</button>
+    <button class="filter-btn" data-cat="Desayunos">Desayunos</button>
+    <button class="filter-btn" data-cat="Chapatas">Chapatas</button>
+    <button class="filter-btn" data-cat="Sandwiches">Sandwiches</button>
+    <button class="filter-btn" data-cat="Tortas">Tortas</button>
+    <button class="filter-btn" data-cat="Tostadas">Tostadas</button>
+    <button class="filter-btn" data-cat="Hamburguesas">Hamburguesas</button>
+    <button class="filter-btn" data-cat="Hot Dogs">Hot Dogs</button>
+    <button class="filter-btn" data-cat="Boneless">Boneless</button>
+    <button class="filter-btn" data-cat="Alitas">Alitas</button>
+    <button class="filter-btn" data-cat="Papas">Papas</button>
+    <button class="filter-btn" data-cat="Bebidas">Bebidas ▾</button>
+    <button class="filter-btn" data-cat="Extras y Especiales">Extras y Especiales</button>
   </div>
 
+  <!-- Sub-filtros de Bebidas — se animan al aparecer -->
+  <div class="sub-filters-wrap" id="subFiltersWrap">
+    <div class="sub-filter-label">Tipo de bebida</div>
+    <div class="sub-filters">
+      <button class="sub-btn active" data-sub="todas">Todas</button>
+      <button class="sub-btn" data-sub="Jarras de Agua"> Jarras de agua</button>
+      <button class="sub-btn" data-sub="Sodas Italianas"> Sodas Italianas</button>
+      <button class="sub-btn" data-sub="Calientes"> Bebidas Calientes</button>
+      <button class="sub-btn" data-sub="Frias"> Bebidas Frias</button>
+      <button class="sub-btn" data-sub="Malteadas"> Malteadas</button>
+      <button class="sub-btn" data-sub="Cerveza"> Cervezas</button>
+    </div>
+  </div>
+
+  <div class="grid-gap"></div>
   <div class="menu-grid" id="menuContainer"></div>
 </section>
 
-<!-- INFO -->
 <section class="section info-section" id="nosotros">
   <div class="info-grid">
-
     <div class="info-card">
-      <h3>Nuestra Historia</h3>
-      <p>Un espacio diseñado para disfrutar café, snacks y buena comida en un ambiente moderno y acogedor. Cada platillo preparado con ingredientes frescos y mucho cariño.</p>
+      <h3>En CALLI creemos que los mejores momentos son los más simples: una buena bebida, una conversación tranquila y un lugar que se siente como volver a casa.</h3>
+<h3>Creamos experiencias cálidas y auténticas para que cada visita la disfrutes, la recuerdes y siempre quieras volver</h3>
     </div>
-
     <div class="info-card" id="horarios">
       <h3>Horarios</h3>
-      <div class="schedule-row">
-        <span class="schedule-day">Lunes – Jueves</span>
-        <span class="schedule-time">8:00 AM — 4:00 PM</span>
-      </div>
-      <div class="schedule-row">
-        <span class="schedule-day">Viernes</span>
-        <span class="schedule-time">8:00 AM — 9:00 PM</span>
-      </div>
-      <div class="schedule-row">
-        <span class="schedule-day">Sábado</span>
-        <span class="schedule-time">9:00 AM — 9:00 PM</span>
-      </div>
-      <div class="schedule-row">
-        <span class="schedule-day">Domingo</span>
-        <span class="schedule-time">9:00 AM — 2:00 PM</span>
-      </div>
+      <div class="schedule-row"><span class="schedule-day">Lunes - Viernes</span><span class="schedule-time">8:00 AM — 4:00 PM</span></div>
+      <div class="schedule-row"><span class="schedule-day">Sábado</span><span class="schedule-time">9:00 AM — 7:00 PM</span></div>
+      <div class="schedule-row"><span class="schedule-day">Domingo</span><span class="schedule-time">9:00 AM — 2:00 PM</span></div>
     </div>
-
   </div>
 </section>
 
-<!-- FOOTER -->
+<section class="section info-section" id="ubicacion">
+  <div class="info-grid">
+    <div class="info-card">
+      <h3>Encuéntranos</h3>
+      <p>Eucalipto 1B Paseo de los sauces, 74160 Huejotzingo, Pue.</p>
+      <br>
+      <a href="https://www.google.com/maps/place/CALLI/@19.1755141,-98.3886355,21z/data=!4m7!3m6!1s0x85cfcf0836239f4b:0x265503d9ef7a9353!4b1!8m2!3d19.1755306!4d-98.388317!16s%2Fg%2F11x2ktjs9j" target="_blank"
+        style="display:inline-flex; align-items:center; gap:8px; margin-top:8px; padding:12px 20px; border-radius:99px; background:var(--brown); color:white; text-decoration:none; font-size:.85rem; font-weight:600;">
+        Ver en Google Maps
+      </a>
+    </div>
+<div style="border-radius:24px; overflow:hidden; height:320px;">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d238.87!2d-98.388317!3d19.1755306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfcf0836239f4b%3A0x265503d9ef7a9353!2sCALLI!5e0!3m2!1ses!2smx!4v1" width="100%" height="320" style="border:0; display:block;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="footer-logo">CALLI</div>
   <div class="footer-sub">Café &bull; Bar &bull; Good Vibes</div>
+  <div class="footer-social">
+    <a href="https://www.instagram.com/callicoffehuejo/" target="_blank" class="social-link instagram">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      Instagram
+    </a>
+    <a href="https://www.facebook.com/people/Calli/61571767330663/" target="_blank" class="social-link facebook">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+      Facebook
+    </a>
+    <a href="#" class="social-link share-btn" onclick="abrirCompartir(event)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      Compartir
+    </a>
+  </div>
   <div class="footer-copy">© 2026 JSPROGAMENT — Todos los derechos reservados</div>
-
 </footer>
 
-<!-- CART BUTTON -->
 <button class="cart-btn" onclick="toggleCart()">
   🛒
   <span class="cart-count" id="cartCount">0</span>
 </button>
 
-<!-- OVERLAY -->
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 
-<!-- CART PANEL -->
 <div class="cart" id="cart">
-
   <div class="cart-header">
     <h2>Tu Pedido</h2>
     <button class="close-btn" onclick="toggleCart()">✕</button>
   </div>
-
   <div class="cart-body">
     <div class="cart-empty" id="cartEmpty">
       <span class="icon">🛍️</span>
@@ -797,121 +407,828 @@ footer {
     </div>
     <div id="cartItems"></div>
   </div>
-
   <div class="cart-footer">
-
     <div class="total-line">
       <span>Total</span>
       <strong>$<span id="total">0</span></strong>
     </div>
-
     <div class="field">
       <input type="text" id="nombre" placeholder=" ">
       <label>Tu nombre</label>
     </div>
-
     <div class="field">
       <input type="text" id="direccion" placeholder=" ">
       <label>Dirección de entrega</label>
     </div>
-
     <div class="field">
       <textarea id="notas" rows="3" placeholder=" "></textarea>
       <label>Notas del pedido</label>
     </div>
-
     <button class="whatsapp-btn" onclick="enviarWhatsApp()">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.126 1.535 5.86L.057 23.743a.75.75 0 0 0 .921.921l5.934-1.488A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.697-.513-5.242-1.408L2.75 21.65l1.062-4.057A9.955 9.955 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-      </svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.126 1.535 5.86L.057 23.743a.75.75 0 0 0 .921.921l5.934-1.488A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.697-.513-5.242-1.408L2.75 21.65l1.062-4.057A9.955 9.955 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
       Enviar pedido por WhatsApp
     </button>
-
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
 
-/* ---- PRODUCTOS (tus imágenes originales) ---- */
+/* ================================================================
+   PRODUCTOS
+
+   Opciones tipo "radio": items = array de strings.
+   Opciones tipo "check": items = array de objetos { label, precio }.
+
+   BEBIDAS: agrega el campo  subcategoria  con uno de estos valores exactos:
+     "Calientes" | "Frías" | "Jugos y Licuados" | "Jarras de Agua" | "Refrescos"
+================================================================ */
+const picanteSalsas = {
+  "Salsa de BBQ":         { chiles: 1, texto: "Suave" },
+  "Habanero":             { chiles: 2, texto: "Medio" },
+  "Salsa Mango Habanero": { chiles: 3, texto: "Picoso" },
+  "Salsa Habanera":       { chiles: 4, texto: "Muy Picoso" },
+};
 
 const productos = [
+
+  /* ── DESAYUNOS ─────────────────────────────────────────── */
+
   {
-    nombre: "Molletes Especiales",
-    categoria: "desayunos",
-    descripcion: "Frijoles, queso gratinado y toppings especiales.",
-    precio: 85,
-    imagen: "MOLLETES.jpeg"
+    nombre: "Chilaquiles",
+    categoria: "Desayunos",
+    descripcion: "Totopos de maiz, queso y crema",
+    precio: 50,
+    imagen: "Chilaquiles.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Salsa", tipo: "radio", items: ["Rojos", "Verdes"] },
+      {
+        label: "Extras", tipo: "check",
+        items: [
+          { label: "Pollo desebrado", precio: 20 },
+          { label: "Sin crema",       precio: 0  },
+          { label: "Sin queso",       precio: 0  }
+        ]
+      }
+    ]
   },
+
   {
-    nombre: "Enchiladas Verdes",
-    categoria: "desayunos",
-    descripcion: "Tortillas rellenas bañadas en salsa verde.",
+    nombre: "Chilaquiles Rellenos",
+    categoria: "Desayunos",
+    descripcion: "Tortilla rellena, relleno a elegir, queso y crema. Rellenos: Papa, Tinga, Quesillo o Pollo",
+    precio: 80,
+    imagen: "Chilaquiles_Rellenos.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Salsa",   tipo: "radio", items: ["Rojos", "Verdes"] },
+      { label: "Relleno", tipo: "radio", items: ["Papa", "Tinga", "Quesillo", "Pollo"] },
+      {
+        label: "Extras", tipo: "check", 
+        items: [
+          { label: ".....", precio: 0 }
+        ]
+      }
+    ]
+  },
+
+  {
+    nombre: "Enchiladas",
+    categoria: "Desayunos",
+    descripcion: "Tortilla de maiz, queso y crema",
+    precio: 75,
+    imagen: "Enchiladas.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Salsa", tipo: "radio", items: ["Rojas", "Verdes"] },
+      {
+        label: "Extras", tipo: "check",
+        items: [
+          { label: ".....", precio: 0 }
+        ]
+      }
+    ]
+  },
+
+  {
+    nombre: "Enchiladas Suizas",
+    categoria: "Desayunos",
+    descripcion: "Tortilla de maiz, pollo, salsa a elegir con queso crema y queso gratinado",
     precio: 95,
-    imagen: "ENCHILADAS VERDES.jpeg"
+    imagen: "Enchiladas_Suizas.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Salsa", tipo: "radio", items: ["Rojas", "Verdes"] },
+      {
+        label: "Extras", tipo: "check",
+        items: [
+          { label: ".....", precio: 0 }
+        ]
+      }
+    ]
   },
+
   {
-    nombre: "Pozole",
-    categoria: "antojitos",
-    descripcion: "Pozole tradicional acompañado de tostadas.",
-    precio: 120,
-    imagen: "Pozole.jpeg"
-  },
-  {
-    nombre: "Sandwich Especial",
-    categoria: "snacks",
-    descripcion: "Jamón, queso, vegetales frescos y aderezo.",
-    precio: 75,
-    imagen: "Baguette.jpeg"
-  },
-  {
-    nombre: "Boneless",
-    categoria: "snacks",
-    descripcion: "Boneless crujientes con salsa especial.",
-    precio: 135,
-    imagen: "bonnles.jpeg"
-  },
-  {
-    nombre: "Alitas",
-    categoria: "snacks",
-    descripcion: "Orden de alitas bañadas en salsa.",
-    precio: 140,
-    imagen: "ALITAS.jpeg"
-  },
-  {
-    nombre: "Tostadas",
-    categoria: "antojitos",
-    descripcion: "Tostadas tradicionales con crema y queso.",
+    nombre: "Flautas Ahogadas",
+    categoria: "Desayunos",
+    descripcion: "Tortilla de maiz con relleno a elegir, queso y crema. Relleno: Papa, Tinga, Quesillo o Pollo",
     precio: 70,
-    imagen: "TOSTADA 1.jpeg"
+    imagen: "Flautas_Ahogadas.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Salsa",   tipo: "radio", items: ["Rojas", "Verdes"] },
+      { label: "Relleno", tipo: "radio", items: ["Papa", "Tinga", "Quesillo", "Pollo"] },
+      {
+        label: "Extras", tipo: "check",
+        items: [
+          { label: ".....", precio: 0 }
+        ]
+      }
+    ]
   },
+
   {
-    nombre: "Café Americano",
-    categoria: "bebidas",
-    descripcion: "Café caliente recién preparado.",
+    nombre: "Sincronizadas",
+    categoria: "Desayunos",
+    descripcion: "Tortilla de harina, jamón, queso amarillo y pico de gallo",
+    precio: 60,
+    imagen: "Sincronizadas.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      {
+        label: "Extras", tipo: "check",
+        items: [
+          { label: ".....", precio: 0 }
+        ]
+      }
+    ]
+  },
+
+  {
+    nombre: "Huevos al gusto",
+    categoria: "Desayunos",
+    descripcion: "Revuelto o estrellado con tocino",
+    precio: 50,
+    imagen: "Huevos_al_gusto.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Tipo", tipo: "radio", items: ["A la Mexicana", "Con Jamón", "Salchicha", "Longaniza"] },
+      {
+        label: "Extras", tipo: "check",
+        items: [
+          { label: ".....", precio: 0 }
+        ]
+      }
+    ]
+  },
+
+  {
+    nombre: "Molletes",
+    categoria: "Desayunos",
+    descripcion: "Frijoles, proteína a elegir, queso manchego y pico de gallo. Proteína: Jamón, Longaniza",
+    precio: 60,
+    imagen: "Molletes.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Proteína", tipo: "radio", items: ["Jamón", "Longaniza"] },
+      {
+        label: "Extras", tipo: "check",
+        items: [
+          { label: ".....", precio: 0 }
+        ]
+      }
+    ]
+  },
+
+  {
+    nombre: "Bowl de Frutas",
+    categoria: "Desayunos",
+    descripcion: "Fruta de Temporada, yogurt y granola",
+    precio: 70,
+    imagen: "Bowl_de_Frutas.jpeg",   // EXTRAS Y OPCIONES PENDIENTES
+  },
+
+  {
+    nombre: "Pan Francés",
+    categoria: "Desayunos",
+    descripcion: "3 Pzas de pan, Canela y Azúcar",
+    precio: 60,
+    imagen: "Pan_Francés.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+  },
+
+  {
+    nombre: "Hot Cakes",
+    categoria: "Desayunos",
+    descripcion: "3 Pzas, Miel, Chocolate y fruta",
+    precio: 60, 
+    imagen: "Hot_Cakes.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+  },
+
+  {
+    nombre: "Ensalada Caramel",
+    categoria: "Desayunos",
+    descripcion: "Manzana, Pera, Gajos de naranja, Kiwí, Todo Caramelizado, Canela, Azúcar y clavos de olor",
+    precio: 80,
+    imagen: "Ensalada_Caramel.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+  },
+
+  {
+    nombre: "Ensalada de Atún",
+    categoria: "Desayunos",
+    descripcion: "Pepino, Jitomate, Cebolla, Granos de elote, Picante y Mayonesa",
+    precio: 60,
+    imagen: "Ensalada_de_Atún.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+  },
+
+  /* ── CHAPATAS ───────────────────────────────────────────── */
+
+  {
+    nombre: "Pechuga de pollo",
+    categoria: "Chapatas",
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir",
+    precio: 60,
+    imagen: "Pechuga_de_pollo.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle"] }
+    ]
+  },
+
+  {
+    nombre: "Pollo desebrado",
+    categoria: "Chapatas",
+    descripcion: "..", // DESCRIPCIÓN PENDIENTE
+    precio: 60,
+    imagen: "Pollo_desebrado.jpeg", // EXTRAS Y OPCIONES PENDIENTES
+  },
+
+    /* ── SANDWICHES ─────────────────────────────────────────── */
+
+  {
+    nombre: "Sandwich de Jamón",
+    categoria: "Sandwiches",
+    descripcion: "Aderezl a elegir, jitomate cherry, lechuga, cebolla y queso panela Aderezos: Chipotle, Jalapeño o Ranch",
+    precio: 50,
+    imagen: "Sandwich_de_Jamon.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Aderezos", tipo: "radio", items: ["Chipotle", "Jalapeño", "Ranch"] },
+      {
+        label: "Extras", tipo: "check",
+        items: [
+          { label: ".....", precio: 0 }
+        ]
+      }
+    ]
+  },
+
+  {
+    nombre: "Sandwich de Milanesa de pollo",
+    categoria: "Sandwiches",
+    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    precio: 50,
+    imagen: "Sandwich_de_Jamon.jpeg",  // EXTRAS PENDIENTES
+  },
+
+
+    /* ── TORTAS ─────────────────────────────────────────── */
+
+  {
+    nombre: "Torta de milanesa de pollo",
+    categoria: "Tortas",
+    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    precio: 50,
+    imagen: "Torta_de_milanesa_de_pollo.jpeg",  // EXTRAS PENDIENTES
+  },
+
+   {
+    nombre: "Torta de milanesa de res",
+    categoria: "Tortas",
+    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    precio: 50,
+    imagen: "Torta_de_milanesa_de_res.jpeg",  // EXTRAS PENDIENTES
+  },
+
+   {
+    nombre: "Torta de jamon",
+    categoria: "Tortas",
+    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    precio: 50,
+    imagen: "Torta_de_jamon.jpeg",  // EXTRAS PENDIENTES
+  },
+
+   {
+    nombre: "Torta de milanesa con papas",
+    categoria: "Tortas",
+    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    precio: 50,
+    imagen: "Torta_de_milanesa_con_papas.jpeg",  // EXTRAS PENDIENTES
+  },
+
+   {
+    nombre: "Torta de Bisteck con papas",
+    categoria: "Tortas",
+    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    precio: 50,
+    imagen: "Torta_de_bisteck_con_papas.jpeg",  // EXTRAS PENDIENTES
+  },
+
+   {
+    nombre: "Torta de Salchicha",
+    categoria: "Tortas",
+    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    precio: 50,
+    imagen: "Torta_de_salchicha.jpeg",  // EXTRAS PENDIENTES
+  },
+
+
+    /* ── TOSTADAS ────────────────────────────────────────────── */
+
+    {
+    nombre: "Tostada de quesillo",
+    categoria: "Tostadas",
+    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    precio: 30,
+    imagen: "Tostada_de_quesillo.jpeg",  // EXTRAS PENDIENTES
+  },
+
+  {
+    nombre: "Tostada de pollo",
+    categoria: "Tostadas",
+    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    precio: 30,
+    imagen: "Tostada_de_pollo.jpeg",  // EXTRAS PENDIENTES
+  },
+
+  {
+    nombre: "Tostada de tinga",
+    categoria: "Tostadas",
+    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    precio: 30,
+    imagen: "Tostada_de_tinga.jpeg",  // EXTRAS PENDIENTES
+  },
+
+
+   /* ── HAMBURGUESAS ────────────────────────────────────────────── */
+
+    {
+      nombre: "Hamburguesa Clasica",
+      categoria: "Hamburguesas",
+      descripcion: "Carne mixta, jitomate, cebolla, queso amarillo y lechuga", 
+      precio: 59,
+      imagen: "Hamburguesa_Clasica.jpeg",  // EXTRAS PENDIENTES
+  },
+
+    {
+      nombre: "Hamburguesa Doble",
+      categoria: "Hamburguesas",
+      descripcion: "Doble carne mixta, jitomate, cebolla, queso amarillo, lechuga y tocino", 
+      imagen: "Hamburguesa_Doble.jpeg",  // EXTRAS PENDIENTES
+  },
+
+    {
+      nombre: "Hamburguesa Hawaiana",
+      categoria: "Hamburguesas",
+      descripcion: "Carne mixta, jitomate, cebolla, queso amarrillo, lechuga, salchica y piña", 
+      imagen: "Hamburguesa_Hawaiana.jpeg",  // EXTRAS PENDIENTES
+  },
+
+
+  /* ── HOT DOGS ────────────────────────────────────────────── */
+
+  {
+    nombre: "Hot Dog Clasico",
+    categoria: "Hot Dogs",
+    descripcion: "Salchicha, jitomate Y cebolla", 
+    precio: 29,
+    imagen: "Hot_Dog_Clasico.jpeg",  // EXTRAS PENDIENTES
+  },
+
+  {
+    nombre: "Hot dog tocino",
+    categoria: "Hot Dogs",
+    descripcion: "Salchicha, jitomate,cebolla, tocino y quesillo",
+    precio: 50,
+    imagen: "Hot_Dog_Tocino.jpeg",  // EXTRAS PENDIENTES
+  },
+
+
+  /* ── BONLESS ────────────────────────────────────────────── */
+
+ {
+    nombre: "Boneless 220 GRS",
+    categoria: "Boneless",
+    descripcion: "....",
+    precio: 59,
+    imagen: "Boneless_220_GRS.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Salsa", tipo: "salsa", items: ["Salsa de BBQ", "Habanero", "Salsa Mango Habanero", "Salsa Habanera"] }
+    ]
+  },
+
+  {
+    nombre: "Boneless 250 GRS",
+    categoria: "Boneless",
+    descripcion: "....",
+    precio: 119,
+    imagen: "Boneless_250_GRS.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Salsa", tipo: "salsa", items: ["Salsa de BBQ", "Habanero", "Salsa Mango Habanero", "Salsa Habanera"] }
+    ]
+  },
+
+
+  /* ── ALITAS ────────────────────────────────────────────── */
+
+  {
+    nombre: "Alitas Orden de 5",
+    categoria: "Alitas",
+    descripcion: "....",
+    precio: 59,
+    imagen: "Alitas_Orden_5.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: []
+  },
+
+  {
+    nombre: "Alitas orden de 10",
+    categoria: "Alitas",
+    descripcion: "....",
+    precio: 119,
+    imagen: "Alitas_Orden_10.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: []
+  },
+
+
+  /* ── PAPAS ────────────────────────────────────────────── */
+
+  {
+    nombre: "Papas a la Francesa",
+    categoria: "Papas",
+    descripcion: "....",
+    precio: 3,
+    imagen: "Papas_a_la_Francesa.jpeg",  // EXTRAS  Y OPCIONES PENDIENTES
+    opciones: []
+  },
+
+  {
+    nombre: "Papas Gajo",
+    categoria: "Papas",
+    descripcion: "....",
+    precio: 35,
+    imagen: "Papas_Gajo.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: []
+  },
+
+
+  /* ── BEBIDAS ────────────────────────────────────────────── */
+  /*
+     Cada bebida DEBE tener  subcategoria  con uno de estos valores exactos:
+     "Calientes" | "Frías" | "Jugos y Licuados" | "Jarras de Agua" | "Refrescos"
+  */
+
+  {
+    nombre: "Jarra de agua",
+    categoria: "Bebidas",
+    subcategoria: "Jarras de Agua", 
+    descripcion: "....",
+    precio: 60,
+    imagen: "Jarra_Agua.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Jarra Mineral",
+    categoria: "Bebidas",
+    subcategoria: "Jarras de Agua",
+    descripcion: "....",
+    precio: 70,
+    imagen: "Jarra_Minerál.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Jarra de agua de maracuyá",
+    categoria: "Bebidas",
+    subcategoria: "Jarras de Agua",
+    descripcion: "...",
+    precio: 65,
+    imagen: "Jarra_Maracuyá.jpeg",
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Soda italiana mora azul",
+    categoria: "Bebidas",
+    subcategoria: "Sodas Italianas",
+    descripcion: "....",
+    precio: 55, 
+    imagen: "Soda_Italiana_Mora_Azul.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Soda italiana Kiwi",
+    categoria: "Bebidas",
+    subcategoria: "Sodas Italianas",
+    descripcion: "....",
+    precio: 55, 
+    imagen: "Soda_Italiana_Kiwi.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+   {
+    nombre: "Soda italiana De Frambueza",
+    categoria: "Bebidas",
+    subcategoria: "Sodas Italianas",
+    descripcion: "....",
+    precio: 55, 
+    imagen: "Soda_Italiana_Frambueza.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Soda italiana De Maracuyá",
+    categoria: "Bebidas",
+    subcategoria: "Sodas Italianas",
+    descripcion: "....",
+    precio: 55, 
+    imagen: "Soda_Italiana_Maracuyá.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Cafe Americano",
+    categoria: "Bebidas",
+    subcategoria: "Calientes",
+    descripcion: "Cafe americano caliente",
     precio: 45,
-    imagen: "imagenes/cafe-americano.jpg"
+    imagen: "Cafe_Americano.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
   },
+
   {
-    nombre: "Frappé",
-    categoria: "bebidas",
-    descripcion: "Frappé cremoso, sabor a elegir.",
-    precio: 75,
-    imagen: "imagenes/frappe.jpg"
+    nombre: "Cafe Capuchino",
+    categoria: "Bebidas",
+    subcategoria: "Calientes",
+    descripcion: "Cafe capuchino caliente",
+    precio: 50,
+    imagen: "Cafe_Capuchino.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
   },
+  
   {
-    nombre: "Hamburguesa CALLI",
-    categoria: "snacks",
-    descripcion: "Carne artesanal con queso y vegetales frescos.",
-    precio: 130,
-    imagen: "imagenes/hamburguesa.jpg"
-  }
+    nombre: "Cafe Capuchino de sabor",
+    categoria: "Bebidas",
+    subcategoria: "Calientes",
+    descripcion: "Cafe capuchino caliente",
+    precio: 50,
+    imagen: "Cafe_Capuchino.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+      { label: "Sabor", tipo: "radio", items: ["Vainilla", "Rompope", "Almendra", "Crema irlandesa"] }
+    ]
+  },
+  
+
+  {
+    nombre: "Cafe Espresso",
+    categoria: "Bebidas",
+    subcategoria: "Calientes",
+    descripcion: "Cafe espresso caliente",
+    precio: 25,
+    imagen: "Cafe_Espresso.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Flat White",
+    categoria: "Bebidas",
+    subcategoria: "Calientes",
+    descripcion: "....", // DESCRIPCIÓN PENDIENTE
+    precio: 45,
+    imagen: "Flat_White.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Latte",
+    categoria: "Bebidas",
+    subcategoria: "Calientes",
+    descripcion: "Cafe latte caliente",
+    precio: 45,
+    imagen: "Latte.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Chai cocoa",
+    categoria: "Bebidas",
+    subcategoria: "Calientes",
+    descripcion: "Chai cocoa caliente",
+    precio: 45,
+    imagen: "Chai_Cocoa.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Chai vainilla",
+    categoria: "Bebidas",
+    subcategoria: "Calientes",
+    descripcion: "Chai vainilla caliente",
+    precio: 45,
+    imagen: "Chai_Vainilla.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Chocolate",
+    categoria: "Bebidas",
+    subcategoria: "Calientes",
+    descripcion: "Chocolate caliente",
+    precio: 45,
+    imagen: "Chocolate.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Té",
+    categoria: "Bebidas",
+    subcategoria: "Calientes",
+    descripcion: "Té caliente",
+    precio: 45,
+    imagen: "Te.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Jugo Boing",
+    categoria: "Bebidas",
+    subcategoria: "Frias",
+    descripcion: "Jugo Boing frío",
+    precio: 15,
+    imagen: "Jugo_Boing.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Limonada",
+    categoria: "Bebidas",
+    subcategoria: "Frias",
+    descripcion: "Limonada fría",
+    precio: 35,
+    imagen: "Limonada.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Limonda mineral",
+    categoria: "Bebidas",
+    subcategoria: "Frias",
+    descripcion: "Limonda mineral fría",
+    precio: 20,
+    imagen: "Limonda_Mineral.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Sangria Preparada",
+    categoria: "Bebidas",
+    subcategoria: "Frias",
+    descripcion: "Sangria preparada fría",
+    precio: 55,
+    imagen: "Sangria_Preparada.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Coca cola",
+    categoria: "Bebidas",
+    subcategoria: "Frias",
+    descripcion: "Coca cola fría",
+    precio: 30,
+    imagen: "Coca_Cola.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Limonada",
+    categoria: "Bebidas",
+    subcategoria: "Frias",
+    descripcion: "Limonada fría",
+    precio: 35,
+    imagen: "Limonada.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Malteada de Chocolate",
+    categoria: "Bebidas",
+    subcategoria: "Malteadas",
+    descripcion: "Malteada de chocolate caliente",
+    precio: 50,
+    imagen: "Malteada_De_Chocolate.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Malteada de fresa",
+    categoria: "Bebidas",
+    subcategoria: "Malteadas",
+    descripcion: "Malteada de fresa caliente",
+    precio: 50,
+    imagen: "Malteada_De_Fresa.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Cerveza Victoria",
+    categoria: "Bebidas",
+    subcategoria: "Cerveza",
+    descripcion: "...",
+    precio: 45,
+    imagen: "Cerveza_Victoria.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "XX lager",
+    categoria: "Bebidas",
+    subcategoria: "Cerveza",
+    descripcion: "...",
+    precio: 45,
+    imagen: "XX_Lager.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+  {
+    nombre: "Modelo especial",
+    categoria: "Bebidas",
+    subcategoria: "Cerveza",
+    descripcion: "...",
+    precio: 30,
+    imagen: "Modelo_Especial.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
+   {
+    nombre: "Negra modelo",
+    categoria: "Bebidas",
+    subcategoria: "Cerveza",
+    descripcion: "...",
+    precio: 30,
+    imagen: "Negra_Modelo.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+    ]
+  },
+
 ];
 
-/* ---- RENDER ---- */
+/* ================================================================
+   ESTADO
+================================================================ */
+
+let categoriaActiva   = "todos";
+let subCategoriaActiva = "todas";
+
+/* ================================================================
+   FILTRADO
+================================================================ */
+
+function getListaFiltrada() {
+  let lista = productos;
+
+  if (categoriaActiva !== "todos") {
+    lista = lista.filter(p => p.categoria === categoriaActiva);
+  }
+
+  if (categoriaActiva === "Bebidas" && subCategoriaActiva !== "todas") {
+    lista = lista.filter(p => p.subcategoria === subCategoriaActiva);
+  }
+
+  return lista;
+}
+
+/* ================================================================
+   RENDER
+================================================================ */
 
 const menuContainer = document.getElementById("menuContainer");
 
@@ -919,15 +1236,23 @@ function renderMenu(lista) {
   menuContainer.innerHTML = "";
   lista.forEach((item) => {
     const gi = productos.indexOf(item);
+    const opcionesHTML = renderOpciones(item.opciones, gi);
+
+    // En modo Bebidas filtralas por subcategoria → muestra subcategoría en el badge
+    const badgeTexto = (item.subcategoria && categoriaActiva === "Bebidas")
+      ? item.subcategoria
+      : item.categoria;
+
     menuContainer.innerHTML += `
     <div class="card">
       <div class="card-img-wrap">
         <img src="${item.imagen}" alt="${item.nombre}" loading="lazy">
-        <div class="card-badge">${item.categoria}</div>
+        <div class="card-badge">${badgeTexto}</div>
       </div>
       <div class="card-content">
         <h3>${item.nombre}</h3>
         <p>${item.descripcion}</p>
+        ${opcionesHTML}
         <div class="card-bottom">
           <div class="price">$${item.precio}</div>
           <button class="add-btn" onclick="agregarCarrito(${gi}, this)">+ Agregar</button>
@@ -937,41 +1262,114 @@ function renderMenu(lista) {
   });
 }
 
-renderMenu(productos);
+function renderOpciones(opciones, idx) {
+  if (!opciones || opciones.length === 0) return "";
 
-/* ---- FILTROS ---- */
+  let html = `<div class="opciones-wrap"><div class="opciones-titulo">Personaliza tu orden</div>`;
 
-document.querySelectorAll(".filter-btn").forEach(btn => {
-  btn.addEventListener("click", function() {
-    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-    this.classList.add("active");
-    const cat = this.dataset.cat;
-    renderMenu(cat === "todos" ? productos : productos.filter(p => p.categoria === cat));
+  opciones.forEach((grupo, gi) => {
+    html += `<div class="opciones-grupo">
+      <div class="opciones-grupo-label">${grupo.label}</div>
+      <div class="opciones-chips">`;
+
+   grupo.items.forEach((op) => {
+      if (grupo.tipo === "salsa") {
+        const info = picanteSalsas[op] || { chiles: 1, texto: "Suave" };
+        const chileEmojis = "🌶️".repeat(info.chiles);
+        html += `<span class="chip radio salsa-chip"
+          data-prod="${idx}" data-grupo="${gi}" data-tipo="radio" data-precio="0"
+          onclick="toggleChip(this)">
+          <span class="chip-salsa-nombre">${op}</span>
+          <span class="chip-picante">${chileEmojis}</span>
+          <span class="picante-label">${info.texto}</span>
+        </span>`;
+      } else if (grupo.tipo === "radio") {
+        html += `<span class="chip radio"
+          data-prod="${idx}" data-grupo="${gi}" data-tipo="radio" data-precio="0"
+          onclick="toggleChip(this)">${op}</span>`;
+      } else {
+        const precioExtra = op.precio || 0;
+        const precioLabel = precioExtra > 0 ? `<span class="chip-price">+$${precioExtra}</span>` : "";
+        html += `<span class="chip"
+          data-prod="${idx}" data-grupo="${gi}" data-tipo="check" data-precio="${precioExtra}"
+          onclick="toggleChip(this)">${op.label}${precioLabel}</span>`;
+      }
+    });
+
+    html += `</div></div>`;
   });
-});
 
-/* ---- CARRITO ---- */
+  html += `</div>`;
+  return html;
+}
+
+renderMenu(getListaFiltrada());
+
+/* ================================================================
+   CHIPS INTERACTIVOS
+================================================================ */
+
+function toggleChip(el) {
+  const tipo  = el.dataset.tipo;
+  const prod  = el.dataset.prod;
+  const grupo = el.dataset.grupo;
+
+  if (tipo === "radio") {
+    document.querySelectorAll(`.chip[data-prod="${prod}"][data-grupo="${grupo}"]`)
+      .forEach(c => c.classList.remove("selected"));
+    el.classList.add("selected");
+  } else {
+    el.classList.toggle("selected");
+  }
+}
+
+function leerOpciones(productoIdx) {
+  const chips = document.querySelectorAll(`.chip[data-prod="${productoIdx}"].selected`);
+  const grupos = {};
+  let precioExtrasTotal = 0;
+
+  chips.forEach(c => {
+    const gi     = c.dataset.grupo;
+    const label  = productos[productoIdx].opciones[gi].label;
+    const precio = parseFloat(c.dataset.precio) || 0;
+    const texto  = c.childNodes[0].textContent.trim();
+
+    if (!grupos[label]) grupos[label] = [];
+    grupos[label].push({ texto, precio });
+    precioExtrasTotal += precio;
+  });
+
+  return { grupos, precioExtrasTotal };
+}
+
+/* ================================================================
+   CARRITO
+================================================================ */
 
 let carrito = [];
 
 function agregarCarrito(index, btn) {
-  carrito.push(productos[index]);
+  const { grupos, precioExtrasTotal } = leerOpciones(index);
+  const precioFinal = productos[index].precio + precioExtrasTotal;
+
+  carrito.push({ ...productos[index], precioFinal, opcionesSeleccionadas: grupos });
   actualizarCarrito();
-  showToast("✓ " + productos[index].nombre + " agregado");
+
+  const resumen = Object.values(grupos).flat().map(o => o.texto);
+  const extra = resumen.length ? ` (${resumen.join(", ")})` : "";
+  showToast("✓ " + productos[index].nombre + extra + " agregado");
+
   if (btn) {
     btn.classList.add("added");
     btn.textContent = "✓ Agregado";
-    setTimeout(() => {
-      btn.classList.remove("added");
-      btn.textContent = "+ Agregar";
-    }, 1500);
+    setTimeout(() => { btn.classList.remove("added"); btn.textContent = "+ Agregar"; }, 1500);
   }
 }
 
 function actualizarCarrito() {
-  const itemsEl  = document.getElementById("cartItems");
-  const emptyEl  = document.getElementById("cartEmpty");
-  const countEl  = document.getElementById("cartCount");
+  const itemsEl = document.getElementById("cartItems");
+  const emptyEl = document.getElementById("cartEmpty");
+  const countEl = document.getElementById("cartCount");
 
   itemsEl.innerHTML = "";
   let total = 0;
@@ -986,12 +1384,23 @@ function actualizarCarrito() {
   }
 
   carrito.forEach((item, i) => {
-    total += item.precio;
+    total += item.precioFinal;
+
+    const opts = item.opcionesSeleccionadas || {};
+    let optsHTML = "";
+    Object.entries(opts).forEach(([label, vals]) => {
+      if (vals.length) {
+        const textos = vals.map(v => v.precio > 0 ? `${v.texto} (+$${v.precio})` : v.texto).join(", ");
+        optsHTML += `<span>${label}: ${textos}</span><br>`;
+      }
+    });
+
     itemsEl.innerHTML += `
     <div class="cart-item">
       <div class="cart-item-info">
         <h4>${item.nombre}</h4>
-        <div class="item-price">$${item.precio}</div>
+        <div class="item-price">$${item.precioFinal}</div>
+        ${optsHTML ? `<div class="item-opts">${optsHTML}</div>` : ""}
       </div>
       <button class="remove-btn" onclick="eliminar(${i})">✕</button>
     </div>`;
@@ -1011,7 +1420,9 @@ function toggleCart() {
   document.body.style.overflow = document.getElementById("cart").classList.contains("active") ? "hidden" : "";
 }
 
-/* ---- WHATSAPP ---- */
+/* ================================================================
+   WHATSAPP
+================================================================ */
 
 function enviarWhatsApp() {
   if (carrito.length === 0) { showToast("⚠️ Tu carrito está vacío"); return; }
@@ -1029,17 +1440,68 @@ function enviarWhatsApp() {
 
   let total = 0;
   carrito.forEach(item => {
-    msg += "• " + item.nombre + " — $" + item.precio + "%0A";
-    total += item.precio;
+    msg += "%0A• " + item.nombre + " — $" + item.precioFinal + "%0A";
+
+    const opts = item.opcionesSeleccionadas || {};
+    Object.entries(opts).forEach(([label, vals]) => {
+      if (vals.length) {
+        const textos = vals.map(v => v.precio > 0 ? `${v.texto} (+$${v.precio})` : v.texto).join(", ");
+        msg += "  " + label + ": " + textos + "%0A";
+      }
+    });
+
+    total += item.precioFinal;
   });
 
+  msg += "%0A💰 Total: $" + total;
   if (notas) msg += "%0A%0A Notas: " + notas;
 
-  const numero = "522461066503"; /* ← CAMBIA POR TU NÚMERO */
-  window.open("https://wa.me/" + numero + "?text=" + msg);
+  window.open("https://wa.me/522461066503?text=" + msg);
 }
 
-/* ---- TOAST ---- */
+/* ================================================================
+   FILTROS PRINCIPALES
+================================================================ */
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", function () {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    this.classList.add("active");
+
+    categoriaActiva = this.dataset.cat;
+    const subWrap = document.getElementById("subFiltersWrap");
+
+    if (categoriaActiva === "Bebidas") {
+      subWrap.classList.add("visible");
+      // Resetear sub-filtro
+      subCategoriaActiva = "todas";
+      document.querySelectorAll(".sub-btn").forEach(b => b.classList.remove("active"));
+      document.querySelector('.sub-btn[data-sub="todas"]').classList.add("active");
+    } else {
+      subWrap.classList.remove("visible");
+      subCategoriaActiva = "todas";
+    }
+
+    renderMenu(getListaFiltrada());
+  });
+});
+
+/* ================================================================
+   SUB-FILTROS DE BEBIDAS
+================================================================ */
+
+document.querySelectorAll(".sub-btn").forEach(btn => {
+  btn.addEventListener("click", function () {
+    document.querySelectorAll(".sub-btn").forEach(b => b.classList.remove("active"));
+    this.classList.add("active");
+    subCategoriaActiva = this.dataset.sub;
+    renderMenu(getListaFiltrada());
+  });
+});
+
+/* ================================================================
+   TOAST
+================================================================ */
 
 function showToast(msg) {
   const t = document.getElementById("toast");
@@ -1048,6 +1510,99 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove("show"), 2500);
 }
 
+/* ── COMPARTIR ── */
+const SHARE_URL = "https://callicoffe.com.mx/";
+
+function abrirCompartir(e) {
+  e.preventDefault();
+  document.getElementById('shareOverlay').classList.add('active');
+  document.getElementById('sharePanel').classList.add('active');
+  document.getElementById('shareUrlText').textContent = SHARE_URL;
+  generarQR();
+}
+
+function cerrarCompartir() {
+  document.getElementById('shareOverlay').classList.remove('active');
+  document.getElementById('sharePanel').classList.remove('active');
+}
+
+function generarQR() {
+  const canvas = document.getElementById('qrCanvas');
+  const size = 200;
+  canvas.width = size; canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  // QR simple visual — carga qrcode.js desde CDN
+  if (window.QRCode) {
+    canvas.parentNode.innerHTML = '';
+    const div = document.createElement('div');
+    canvas.parentNode ? canvas.parentNode.appendChild(div) : document.querySelector('.share-qr-wrap').prepend(div);
+    new QRCode(div, { text: SHARE_URL, width: 200, height: 200, colorDark: '#3d2b22', colorLight: '#f6ede6' });
+  }
+}
+
+function compartirPor(red) {
+  const url = encodeURIComponent(SHARE_URL);
+  const texto = encodeURIComponent('🍽️ Visita el menú de CALLI — Café & Bar en Huejotzingo');
+
+  if (red === 'instagram') {
+    navigator.clipboard.writeText(SHARE_URL).then(() => {
+      showToast('✓ Link copiado — pégalo en tu historia de Instagram');
+      setTimeout(() => window.open('https://www.instagram.com/', '_blank'), 1000);
+    });
+    return;
+  }
+
+  const links = {
+    whatsapp: `https://wa.me/?text=${texto}%20${url}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+  };
+  window.open(links[red], '_blank');
+}
+function compartirPor(red) {
+  const url = encodeURIComponent(SHARE_URL);
+  const links = {
+    whatsapp:  `https://wa.me/?text=%20${url}`,
+    facebook:  `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+  };
+  window.open(links[red], '_blank');
+}
+
+function copiarLink() {
+  navigator.clipboard.writeText(SHARE_URL).then(() => showToast('✓ Link copiado'));
+}
+
 </script>
+<!-- Panel compartir -->
+
+</div>
+
+<div class="share-overlay" id="shareOverlay" onclick="cerrarCompartir()"></div>
+<div class="share-panel" id="sharePanel">
+  <div class="share-panel-header">
+    <h3>Comparte nuestra pagina web </h3>
+    <button class="close-btn" onclick="cerrarCompartir()">✕</button>
+  </div>
+  <div class="share-qr-wrap">
+    <canvas id="qrCanvas"></canvas>
+    <p class="share-url" id="shareUrlText">https://callicoffe.com.mx/</p>
+  </div>
+  <div class="share-apps">
+    <a class="share-app-btn whatsapp" onclick="compartirPor('whatsapp')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.126 1.535 5.86L.057 23.743a.75.75 0 0 0 .921.921l5.934-1.488A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.697-.513-5.242-1.408L2.75 21.65l1.062-4.057A9.955 9.955 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      WhatsApp
+    </a>
+    <a class="share-app-btn instagram" onclick="compartirPor('instagram')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      Instagram
+    </a>
+    <a class="share-app-btn facebook" onclick="compartirPor('facebook')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+      Facebook
+    </a>
+    <a class="share-app-btn copiar" onclick="copiarLink()">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copiar link
+    </a>
+  </div>
 </body>
 </html>

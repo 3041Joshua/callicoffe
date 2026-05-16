@@ -4,12 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="Logo.png">
 <link rel="icon" type="image/png" sizes="192x192" href="Logo.png">
-  
-<title>CALLI </title>
-  <meta name="description" content="CALLI Café • Bar en Huejotzingo, Puebla. Desayunos, hamburguesas, alitas, boneless, bebidas y más. Haz tu pedido directo por WhatsApp. ¡Te esperamos!">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -327,7 +325,6 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
     <div class="sub-filter-label">Tipo de bebida</div>
     <div class="sub-filters">
       <button class="sub-btn active" data-sub="todas">Todas</button>
-      <button class="sub-btn" data-sub="Jarras de Agua"> Jarras de agua</button>
       <button class="sub-btn" data-sub="Sodas Italianas"> Sodas Italianas</button>
       <button class="sub-btn" data-sub="Calientes"> Bebidas Calientes</button>
       <button class="sub-btn" data-sub="Frias"> Bebidas Frias</button>
@@ -471,8 +468,6 @@ const productos = [
         label: "Extras", tipo: "check",
         items: [
           { label: "Pollo desebrado", precio: 20 },
-          { label: "Sin crema",       precio: 0  },
-          { label: "Sin queso",       precio: 0  }
         ]
       }
     ]
@@ -533,12 +528,11 @@ const productos = [
   {
     nombre: "Flautas Ahogadas",
     categoria: "Desayunos",
-    descripcion: "Tortilla de maiz con relleno a elegir, queso y crema. Relleno: Papa, Tinga, Quesillo o Pollo",
+    descripcion: "Tortilla de maiz con relleno a elegir, queso y crema.",
     precio: 70,
     imagen: "Flautas_Ahogadas.jpeg",  // EXTRAS PENDIENTES
     opciones: [
       { label: "Salsa",   tipo: "radio", items: ["Rojas", "Verdes"] },
-      { label: "Relleno", tipo: "radio", items: ["Papa", "Tinga", "Quesillo", "Pollo"] },
       {
         label: "Extras", tipo: "check",
         items: [
@@ -567,11 +561,12 @@ const productos = [
   {
     nombre: "Huevos al gusto",
     categoria: "Desayunos",
-    descripcion: "Revuelto o estrellado con tocino",
+    descripcion: "Revuelto con tocino o estrellado con tocino",
     precio: 50,
     imagen: "Huevos_al_gusto.jpeg",  // EXTRAS PENDIENTES
     opciones: [
       { label: "Tipo", tipo: "radio", items: ["A la Mexicana", "Con Jamón", "Salchicha", "Longaniza"] },
+      { label: "Tipo de huevo", tipo: "radio", items: ["Revuelto con tocino", "Estrellado con tocino"] },
       {
         label: "Extras", tipo: "check",
         items: [
@@ -584,11 +579,10 @@ const productos = [
   {
     nombre: "Molletes",
     categoria: "Desayunos",
-    descripcion: "Frijoles, proteína a elegir, queso manchego y pico de gallo. Proteína: Jamón, Longaniza",
+    descripcion: "Frijoles, proteína a elegir, queso manchego y pico de gallo.",
     precio: 60,
     imagen: "Molletes.jpeg",  // EXTRAS PENDIENTES
     opciones: [
-      { label: "Proteína", tipo: "radio", items: ["Jamón", "Longaniza"] },
       {
         label: "Extras", tipo: "check",
         items: [
@@ -604,6 +598,11 @@ const productos = [
     descripcion: "Fruta de Temporada, yogurt y granola",
     precio: 70,
     imagen: "Bowl_de_Frutas.jpeg",   // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+      {
+        label: "Yogurt", tipo: "radio", items: ["Fresa", "Natural"]
+      }
+    ]
   },
 
   {
@@ -641,22 +640,36 @@ const productos = [
   /* ── CHAPATAS ───────────────────────────────────────────── */
 
   {
-    nombre: "Pechuga de pollo",
+    nombre: "Chapata de pechuga de pollo",
     categoria: "Chapatas",
-    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir",
+    descripcion: "Jitomate cherry, Lechuga, Cebolla, Queso panela Y Aderezo a elegir",
     precio: 60,
     imagen: "Pechuga_de_pollo.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
     opciones: [
-      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle"] }
+      { label: "Aderezo", tipo: "radio", items: ["Jalapeño", "Chipotle", "Ranch"] }
     ]
   },
 
   {
-    nombre: "Pollo desebrado",
+    nombre: "Chapata dePollo desebrado",
     categoria: "Chapatas",
-    descripcion: "..", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Jitomate cherry, Lechuga, Cebolla, Queso panela Y Aderezo a elegir", // DESCRIPCIÓN PENDIENTE
     precio: 60,
     imagen: "Pollo_desebrado.jpeg", // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+      { label: "Aderezo", tipo: "radio", items: ["Jalapeño", "Chipotle", "Ranch"] }
+    ]
+  },
+
+  {
+    nombre: "Chapata de Jamón",
+    categoria: "Chapatas",
+    descripcion: "Jitomate cherry, Lechuga, Cebolla, Queso panela Y Aderezo a elegir", // DESCRIPCIÓN PENDIENTE
+    precio: 50,
+    imagen: "Pollo_desebrado.jpeg", // EXTRAS Y OPCIONES PENDIENTES
+    opciones: [
+      { label: "Aderezo", tipo: "radio", items: ["Jalapeño", "Chipotle", "Ranch"] }
+    ]
   },
 
     /* ── SANDWICHES ─────────────────────────────────────────── */
@@ -664,11 +677,10 @@ const productos = [
   {
     nombre: "Sandwich de Jamón",
     categoria: "Sandwiches",
-    descripcion: "Aderezl a elegir, jitomate cherry, lechuga, cebolla y queso panela Aderezos: Chipotle, Jalapeño o Ranch",
+    descripcion: "",
     precio: 50,
     imagen: "Sandwich_de_Jamon.jpeg",  // EXTRAS PENDIENTES
     opciones: [
-      { label: "Aderezos", tipo: "radio", items: ["Chipotle", "Jalapeño", "Ranch"] },
       {
         label: "Extras", tipo: "check",
         items: [
@@ -683,58 +695,94 @@ const productos = [
     categoria: "Sandwiches",
     descripcion: "...", // DESCRIPCIÓN PENDIENTE
     precio: 50,
-    imagen: "Sandwich_de_Jamon.jpeg",  // EXTRAS PENDIENTES
+    imagen: "Sandwich_de_Milanesa_de_pollo.jpeg",  // EXTRAS PENDIENTES
   },
 
+  {
+    nombre: "Club Sandwich",
+    categoria: "Sandwiches",
+    descripcion: "Pollo deshebrado, jamón, jitomate, lechuga, tocino, queso manchego y papas a la francesa", // DESCRIPCIÓN PENDIENTE
+    precio: 120,
+    imagen: "Club_Sandwich.jpeg",  // EXTRAS PENDIENTES
+  },
 
     /* ── TORTAS ─────────────────────────────────────────── */
 
   {
     nombre: "Torta de milanesa de pollo",
     categoria: "Tortas",
-    descripcion: "...", // DESCRIPCIÓN PENDIENTE
-    precio: 50,
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
+    precio: 58,
     imagen: "Torta_de_milanesa_de_pollo.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
+    ]
   },
 
-   {
+  {
+    nombre: "Torta de milanesa de cerdo",
+    categoria: "Tortas",
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
+    precio: 58,
+    imagen: "Torta_de_milanesa_de_cerdo.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
+    ]
+  },
+
+  {
     nombre: "Torta de milanesa de res",
     categoria: "Tortas",
-    descripcion: "...", // DESCRIPCIÓN PENDIENTE
-    precio: 50,
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
+    precio: 60,
     imagen: "Torta_de_milanesa_de_res.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
+    ]
   },
 
-   {
-    nombre: "Torta de jamon",
-    categoria: "Tortas",
-    descripcion: "...", // DESCRIPCIÓN PENDIENTE
-    precio: 50,
-    imagen: "Torta_de_jamon.jpeg",  // EXTRAS PENDIENTES
-  },
-
-   {
+  {
     nombre: "Torta de milanesa con papas",
     categoria: "Tortas",
-    descripcion: "...", // DESCRIPCIÓN PENDIENTE
-    precio: 50,
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
+    precio: 45,
     imagen: "Torta_de_milanesa_con_papas.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
+    ]
   },
 
-   {
+  {
     nombre: "Torta de Bisteck con papas",
     categoria: "Tortas",
-    descripcion: "...", // DESCRIPCIÓN PENDIENTE
-    precio: 50,
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
+    precio: 45,
     imagen: "Torta_de_bisteck_con_papas.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
+    ]
   },
 
-   {
+  {
+    nombre: "Torta de jamon",
+    categoria: "Tortas",
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
+    precio: 45,
+    imagen: "Torta_de_jamon.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
+    ]
+  },
+
+  {
     nombre: "Torta de Salchicha",
     categoria: "Tortas",
-    descripcion: "...", // DESCRIPCIÓN PENDIENTE
-    precio: 50,
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
+    precio: 45,
     imagen: "Torta_de_salchicha.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
+    ]
   },
 
 
@@ -743,25 +791,34 @@ const productos = [
     {
     nombre: "Tostada de quesillo",
     categoria: "Tostadas",
-    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Frijoles, Lechuga, Crema, queso y salsa", // DESCRIPCIÓN PENDIENTE
     precio: 30,
     imagen: "Tostada_de_quesillo.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Salsa", tipo: "radio", items: ["Roja", "Verde"] }
+    ]
   },
 
   {
     nombre: "Tostada de pollo",
     categoria: "Tostadas",
-    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Frijoles, Lechuga, Crema, queso y salsa", // DESCRIPCIÓN PENDIENTE
     precio: 30,
     imagen: "Tostada_de_pollo.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Salsa", tipo: "radio", items: ["Roja", "Verde"] }
+    ]
   },
 
   {
     nombre: "Tostada de tinga",
     categoria: "Tostadas",
-    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Frijoles, Lechuga, Crema, queso y salsa", // DESCRIPCIÓN PENDIENTE
     precio: 30,
     imagen: "Tostada_de_tinga.jpeg",  // EXTRAS PENDIENTES
+    opciones: [
+      { label: "Salsa", tipo: "radio", items: ["Roja", "Verde"] }
+    ]
   },
 
 
@@ -779,6 +836,7 @@ const productos = [
       nombre: "Hamburguesa Doble",
       categoria: "Hamburguesas",
       descripcion: "Doble carne mixta, jitomate, cebolla, queso amarillo, lechuga y tocino", 
+      precio: 59,
       imagen: "Hamburguesa_Doble.jpeg",  // EXTRAS PENDIENTES
   },
 
@@ -786,6 +844,7 @@ const productos = [
       nombre: "Hamburguesa Hawaiana",
       categoria: "Hamburguesas",
       descripcion: "Carne mixta, jitomate, cebolla, queso amarrillo, lechuga, salchica y piña", 
+      precio: 59,
       imagen: "Hamburguesa_Hawaiana.jpeg",  // EXTRAS PENDIENTES
   },
 
@@ -823,11 +882,11 @@ const productos = [
   },
 
   {
-    nombre: "Boneless 250 GRS",
+    nombre: "Boneless 450 GRS",
     categoria: "Boneless",
     descripcion: "....",
     precio: 119,
-    imagen: "Boneless_250_GRS.jpeg",  // EXTRAS PENDIENTES
+    imagen: "Boneless_450_GRS.jpeg",  // EXTRAS PENDIENTES
     opciones: [
       { label: "Salsa", tipo: "salsa", items: ["Salsa de BBQ", "Habanero", "Salsa Mango Habanero", "Salsa Habanera"] }
     ]
@@ -861,7 +920,7 @@ const productos = [
     nombre: "Papas a la Francesa",
     categoria: "Papas",
     descripcion: "....",
-    precio: 3,
+    precio: 30,
     imagen: "Papas_a_la_Francesa.jpeg",  // EXTRAS  Y OPCIONES PENDIENTES
     opciones: []
   },
@@ -882,38 +941,6 @@ const productos = [
      "Calientes" | "Frías" | "Jugos y Licuados" | "Jarras de Agua" | "Refrescos"
   */
 
-  {
-    nombre: "Jarra de agua",
-    categoria: "Bebidas",
-    subcategoria: "Jarras de Agua", 
-    descripcion: "....",
-    precio: 60,
-    imagen: "Jarra_Agua.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
-  },
-
-  {
-    nombre: "Jarra Mineral",
-    categoria: "Bebidas",
-    subcategoria: "Jarras de Agua",
-    descripcion: "....",
-    precio: 70,
-    imagen: "Jarra_Minerál.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
-  },
-
-  {
-    nombre: "Jarra de agua de maracuyá",
-    categoria: "Bebidas",
-    subcategoria: "Jarras de Agua",
-    descripcion: "...",
-    precio: 65,
-    imagen: "Jarra_Maracuyá.jpeg",
-    opciones: [
-    ]
-  },
 
   {
     nombre: "Soda italiana mora azul",
@@ -923,6 +950,12 @@ const productos = [
     precio: 55, 
     imagen: "Soda_Italiana_Mora_Azul.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
     opciones: [
+      {
+        label: "Extras", tipo: "check",
+        items: [
+          { label: "Perlas explosivas de fresa", precio: 10}
+        ]
+      }
     ]
   },
 
@@ -934,6 +967,12 @@ const productos = [
     precio: 55, 
     imagen: "Soda_Italiana_Kiwi.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
     opciones: [
+      {
+        label: "Extras", tipo: "check",
+        items: [
+          { label: "Perlas explosivas de fresa", precio: 10}
+        ]
+      }
     ]
   },
 
@@ -945,6 +984,12 @@ const productos = [
     precio: 55, 
     imagen: "Soda_Italiana_Frambueza.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
     opciones: [
+      {
+        label: "Extras", tipo: "check",
+        items: [
+          { label: "Perlas explosivas de fresa", precio: 10}
+        ]
+      }
     ]
   },
 
@@ -956,6 +1001,12 @@ const productos = [
     precio: 55, 
     imagen: "Soda_Italiana_Maracuyá.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
     opciones: [
+      {
+        label: "Extras", tipo: "check",
+        items: [
+          { label: "Perlas explosivas de fresa", precio: 10}
+        ]
+      }
     ]
   },
 

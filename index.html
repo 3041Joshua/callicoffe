@@ -152,7 +152,12 @@ header {
 .card { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.08); transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s; }
 .card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,.12); }
 .card-img-wrap { height: 230px; overflow: hidden; position: relative; }
-.card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; display: block; }
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:contain;
+    padding:10px;
+}
 .card:hover img { transform: scale(1.06); }
 .card-badge { position: absolute; top: 14px; left: 14px; background: white; border-radius: 99px; padding: 5px 14px; font-size: .72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green); box-shadow: 0 4px 12px rgba(0,0,0,.12); }
 .card-content { padding: 25px; }
@@ -163,7 +168,11 @@ header {
 .opciones-wrap { margin-top: 16px; padding-top: 14px; border-top: 1px dashed rgba(0,0,0,.08); }
 .opciones-titulo { font-size: .72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
 .opciones-grupo { margin-bottom: 12px; }
-.opciones-grupo-label { font-size: .78rem; font-weight: 600; color: var(--dark); margin-bottom: 7px; }
+.opciones-grupo-label{
+    background: #fff;
+    position: relative;
+    z-index: 10;
+}
 .opciones-chips { display: flex; flex-wrap: wrap; gap: 7px; }
 
 .chip { padding: 6px 14px; border-radius: 99px; border: 1.5px solid rgba(0,0,0,.1); font-size: .76rem; font-weight: 600; font-family: 'Montserrat', sans-serif; cursor: pointer; background: white; color: var(--dark); transition: .2s; user-select: none; }
@@ -173,6 +182,50 @@ header {
 .chip.radio:hover { border-color: var(--green); color: var(--green); }
 .chip-price { opacity: .75; font-weight: 400; margin-left: 4px; }
 .chip.selected .chip-price { opacity: .9; }
+
+/* ── COMENTARIO POR PRODUCTO ── */
+.comentario-prod-wrap {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(0,0,0,.08);
+}
+.comentario-prod-label {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.comentario-prod-label::before {
+  content: '💬';
+  font-size: .85rem;
+}
+.comentario-prod-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid rgba(0,0,0,.09);
+  background: var(--cream);
+  border-radius: 12px;
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .82rem;
+  color: var(--dark);
+  resize: none;
+  transition: border-color .2s;
+  line-height: 1.5;
+}
+.comentario-prod-input::placeholder {
+  color: var(--muted);
+  opacity: .7;
+}
+.comentario-prod-input:focus {
+  border-color: var(--brown);
+  background: white;
+}
 
 .card-bottom { margin-top: 20px; display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid rgba(0,0,0,.06); }
 .price { font-size: 1.5rem; color: var(--brown); font-family: 'Cormorant Garamond', serif; font-weight: 700; }
@@ -190,6 +243,55 @@ header {
 .schedule-row:last-child { border-bottom: none; }
 .schedule-day { font-weight: 600; }
 .schedule-time { color: var(--green); font-weight: 500; }
+
+/* ── EVENTOS PRÓXIMOS ── */
+.eventos-section {
+  padding: 80px 5%;
+  background: var(--cream);
+}
+.eventos-section .section-title {
+  margin-bottom: 40px;
+}
+.eventos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(561px, 1fr));
+  gap: 64px;
+}
+.evento-card {
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: 0 12px 64px rgba(0,0,0,.1);
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1), box-shadow .35s;
+  background: white;
+}
+.evento-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 44px rgba(0,0,0,.14);
+}
+.evento-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  transition: transform .5s ease;
+}
+.evento-card:hover img {
+  transform: scale(1.05);
+}
+.evento-card-body {
+  padding: 18px 20px 20px;
+}
+.evento-card-body h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  color: var(--brown);
+  margin-bottom: 6px;
+}
+.evento-card-body p {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
 
 footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; color: rgba(255,255,255,.5); }
 .footer-logo { font-size: 2.5rem; color: white; font-family: 'Cormorant Garamond', serif; letter-spacing: 6px; margin-bottom: 10px; }
@@ -226,6 +328,7 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
 .cart-item-info h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; }
 .cart-item-info .item-price { font-size: .88rem; color: var(--brown); font-weight: 600; margin-top: 3px; }
 .cart-item-info .item-opts { font-size: .78rem; color: var(--muted); margin-top: 4px; line-height: 1.6; }
+.cart-item-info .item-comentario { font-size: .78rem; color: var(--green-dark); margin-top: 4px; font-style: italic; }
 
 .remove-btn { background: none; border: none; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: .2s; font-size: .9rem; color: var(--muted); flex-shrink: 0; }
 .remove-btn:hover { background: #ffe4e4; color: #e53e3e; }
@@ -318,6 +421,7 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
     <button class="filter-btn" data-cat="Papas">Papas</button>
     <button class="filter-btn" data-cat="Bebidas">Bebidas ▾</button>
     <button class="filter-btn" data-cat="Extras y Especiales">Extras y Especiales</button>
+    <button class="filter-btn" data-cat="Proteinas"> Proteinas a elegir</button>
   </div>
 
   <!-- Sub-filtros de Bebidas — se animan al aparecer -->
@@ -327,6 +431,7 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
       <button class="sub-btn active" data-sub="todas">Todas</button>
       <button class="sub-btn" data-sub="Sodas Italianas"> Sodas Italianas</button>
       <button class="sub-btn" data-sub="Calientes"> Bebidas Calientes</button>
+      <button class="sub-btn" data-sub="Frappes"> Frappes</button>
       <button class="sub-btn" data-sub="Frias"> Bebidas Frias</button>
       <button class="sub-btn" data-sub="Malteadas"> Malteadas</button>
       <button class="sub-btn" data-sub="Cerveza"> Cervezas</button>
@@ -368,6 +473,7 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
     </div>
   </div>
 </section>
+
 
 <footer>
   <div class="footer-logo">CALLI</div>
@@ -438,12 +544,6 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
 
 /* ================================================================
    PRODUCTOS
-
-   Opciones tipo "radio": items = array de strings.
-   Opciones tipo "check": items = array de objetos { label, precio }.
-
-   BEBIDAS: agrega el campo  subcategoria  con uno de estos valores exactos:
-     "Calientes" | "Frías" | "Jugos y Licuados" | "Jarras de Agua" | "Refrescos"
 ================================================================ */
 const picanteSalsas = {
   "Salsa de BBQ":         { chiles: 1, texto: "Suave" },
@@ -461,13 +561,19 @@ const productos = [
     categoria: "Desayunos",
     descripcion: "Totopos de maiz, queso y crema",
     precio: 50,
-    imagen: "Chilaquiles.jpeg",  // EXTRAS PENDIENTES
+    imagen: "Chilaquiles.jpeg",
     opciones: [
       { label: "Salsa", tipo: "radio", items: ["Rojos", "Verdes"] },
       {
-        label: "Extras", tipo: "check",
+        label: "Proteinas", tipo: "check",
         items: [
-          { label: "Pollo desebrado", precio: 20 },
+          { label: "Pechuga asada", precio: 20 },
+          { label: "Bistec de puerco", precio: 20 },
+          { label: "Huevo estrellado", precio: 10 },
+          { label: "Milanesa", precio: 25 },
+          { label: "Bistec de res", precio: 23 },
+          { label: "Tocino", precio: 15 },
+          { label: "Pollo deshebrado", precio: 15 },
         ]
       }
     ]
@@ -478,16 +584,22 @@ const productos = [
     categoria: "Desayunos",
     descripcion: "Tortilla rellena, relleno a elegir, queso y crema. Rellenos: Papa, Tinga, Quesillo o Pollo",
     precio: 80,
-    imagen: "Chilaquiles_Rellenos.jpeg",  // EXTRAS PENDIENTES
+    imagen: "Chilaquiles_Rellenos.jpeg",
     opciones: [
       { label: "Salsa",   tipo: "radio", items: ["Rojos", "Verdes"] },
       { label: "Relleno", tipo: "radio", items: ["Papa", "Tinga", "Quesillo", "Pollo"] },
-      {
-        label: "Extras", tipo: "check", 
+     {
+        label: "Proteinas", tipo: "check",
         items: [
-          { label: ".....", precio: 0 }
+          { label: "Pechuga asada", precio: 20 },
+          { label: "Bistec de puerco", precio: 20 },
+          { label: "Huevo estrellado", precio: 10 },
+          { label: "Milanesa", precio: 25 },
+          { label: "Bistec de res", precio: 23 },
+          { label: "Tocino", precio: 15 },
+          { label: "Pollo deshebrado", precio: 15 },
         ]
-      }
+       }
     ]
   },
 
@@ -496,13 +608,19 @@ const productos = [
     categoria: "Desayunos",
     descripcion: "Tortilla de maiz, queso y crema",
     precio: 75,
-    imagen: "Enchiladas.jpeg",  // EXTRAS PENDIENTES
+    imagen: "Enchiladas.jpeg",
     opciones: [
       { label: "Salsa", tipo: "radio", items: ["Rojas", "Verdes"] },
       {
-        label: "Extras", tipo: "check",
+        label: "Proteinas", tipo: "check",
         items: [
-          { label: ".....", precio: 0 }
+          { label: "Pechuga asada", precio: 20 },
+          { label: "Bistec de puerco", precio: 20 },
+          { label: "Huevo estrellado", precio: 10 },
+          { label: "Milanesa", precio: 25 },
+          { label: "Bistec de res", precio: 23 },
+          { label: "Tocino", precio: 15 },
+          { label: "Pollo deshebrado", precio: 15 },
         ]
       }
     ]
@@ -513,15 +631,10 @@ const productos = [
     categoria: "Desayunos",
     descripcion: "Tortilla de maiz, pollo, salsa a elegir con queso crema y queso gratinado",
     precio: 95,
-    imagen: "Enchiladas_Suizas.jpeg",  // EXTRAS PENDIENTES
+    imagen: "Enchiladas_Suizas.jpeg",
     opciones: [
       { label: "Salsa", tipo: "radio", items: ["Rojas", "Verdes"] },
-      {
-        label: "Extras", tipo: "check",
-        items: [
-          { label: ".....", precio: 0 }
-        ]
-      }
+      { label: "Extras", tipo: "check", items: [{ label: ".....", precio: 0 }] }
     ]
   },
 
@@ -530,15 +643,9 @@ const productos = [
     categoria: "Desayunos",
     descripcion: "Tortilla de maiz con relleno a elegir, queso y crema.",
     precio: 70,
-    imagen: "Flautas_Ahogadas.jpeg",  // EXTRAS PENDIENTES
+    imagen: "Flautas_Ahogadas.jpeg",
     opciones: [
       { label: "Salsa",   tipo: "radio", items: ["Rojas", "Verdes"] },
-      {
-        label: "Extras", tipo: "check",
-        items: [
-          { label: ".....", precio: 0 }
-        ]
-      }
     ]
   },
 
@@ -547,15 +654,7 @@ const productos = [
     categoria: "Desayunos",
     descripcion: "Tortilla de harina, jamón, queso amarillo y pico de gallo",
     precio: 60,
-    imagen: "Sincronizadas.jpeg",  // EXTRAS PENDIENTES
-    opciones: [
-      {
-        label: "Extras", tipo: "check",
-        items: [
-          { label: ".....", precio: 0 }
-        ]
-      }
-    ]
+    imagen: "Quesadillas.jpeg",
   },
 
   {
@@ -563,16 +662,10 @@ const productos = [
     categoria: "Desayunos",
     descripcion: "Revuelto con tocino o estrellado con tocino",
     precio: 50,
-    imagen: "Huevos_al_gusto.jpeg",  // EXTRAS PENDIENTES
+    imagen: "Huevos_con_jamon.jpeg",
     opciones: [
       { label: "Tipo", tipo: "radio", items: ["A la Mexicana", "Con Jamón", "Salchicha", "Longaniza"] },
       { label: "Tipo de huevo", tipo: "radio", items: ["Revuelto con tocino", "Estrellado con tocino"] },
-      {
-        label: "Extras", tipo: "check",
-        items: [
-          { label: ".....", precio: 0 }
-        ]
-      }
     ]
   },
 
@@ -581,15 +674,7 @@ const productos = [
     categoria: "Desayunos",
     descripcion: "Frijoles, proteína a elegir, queso manchego y pico de gallo.",
     precio: 60,
-    imagen: "Molletes.jpeg",  // EXTRAS PENDIENTES
-    opciones: [
-      {
-        label: "Extras", tipo: "check",
-        items: [
-          { label: ".....", precio: 0 }
-        ]
-      }
-    ]
+    imagen: "Molletes.jpeg",
   },
 
   {
@@ -597,12 +682,7 @@ const productos = [
     categoria: "Desayunos",
     descripcion: "Fruta de Temporada, yogurt y granola",
     precio: 70,
-    imagen: "Bowl_de_Frutas.jpeg",   // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-      {
-        label: "Yogurt", tipo: "radio", items: ["Fresa", "Natural"]
-      }
-    ]
+    imagen: "Charola_frutas.jpeg",
   },
 
   {
@@ -610,15 +690,15 @@ const productos = [
     categoria: "Desayunos",
     descripcion: "3 Pzas de pan, Canela y Azúcar",
     precio: 60,
-    imagen: "Pan_Francés.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    imagen: "Pan_Frances.jpeg",
   },
 
   {
     nombre: "Hot Cakes",
     categoria: "Desayunos",
     descripcion: "3 Pzas, Miel, Chocolate y fruta",
-    precio: 60, 
-    imagen: "Hot_Cakes.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    precio: 60,
+    imagen: "Hot_Cakes.jpeg",
   },
 
   {
@@ -626,7 +706,7 @@ const productos = [
     categoria: "Desayunos",
     descripcion: "Manzana, Pera, Gajos de naranja, Kiwí, Todo Caramelizado, Canela, Azúcar y clavos de olor",
     precio: 80,
-    imagen: "Ensalada_Caramel.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    imagen: "Ensalada_Caramel.jpeg",
   },
 
   {
@@ -634,248 +714,193 @@ const productos = [
     categoria: "Desayunos",
     descripcion: "Pepino, Jitomate, Cebolla, Granos de elote, Picante y Mayonesa",
     precio: 60,
-    imagen: "Ensalada_de_Atún.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    imagen: "Ensalada_de_atun.jpeg",
   },
 
   /* ── CHAPATAS ───────────────────────────────────────────── */
 
   {
-    nombre: "Chapata de pechuga de pollo",
+    nombre: "Chapata",
     categoria: "Chapatas",
     descripcion: "Jitomate cherry, Lechuga, Cebolla, Queso panela Y Aderezo a elegir",
     precio: 60,
-    imagen: "Pechuga_de_pollo.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-      { label: "Aderezo", tipo: "radio", items: ["Jalapeño", "Chipotle", "Ranch"] }
-    ]
+    imagen: "Chapata_pechuga_de_pollo.jpeg",
+    opciones: [{ label: "Aderezo", tipo: "radio", items: ["Jalapeño", "Chipotle", "Ranch"] }, { label: "Tipo", tipo: "radio", items: ["Pechuga de pollo", "Pollo desebrado", "Jamón"] }]
   },
 
-  {
-    nombre: "Chapata dePollo desebrado",
-    categoria: "Chapatas",
-    descripcion: "Jitomate cherry, Lechuga, Cebolla, Queso panela Y Aderezo a elegir", // DESCRIPCIÓN PENDIENTE
-    precio: 60,
-    imagen: "Pollo_desebrado.jpeg", // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-      { label: "Aderezo", tipo: "radio", items: ["Jalapeño", "Chipotle", "Ranch"] }
-    ]
-  },
-
-  {
-    nombre: "Chapata de Jamón",
-    categoria: "Chapatas",
-    descripcion: "Jitomate cherry, Lechuga, Cebolla, Queso panela Y Aderezo a elegir", // DESCRIPCIÓN PENDIENTE
-    precio: 50,
-    imagen: "Pollo_desebrado.jpeg", // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-      { label: "Aderezo", tipo: "radio", items: ["Jalapeño", "Chipotle", "Ranch"] }
-    ]
-  },
-
-    /* ── SANDWICHES ─────────────────────────────────────────── */
+  /* ── SANDWICHES ─────────────────────────────────────────── */
 
   {
     nombre: "Sandwich de Jamón",
     categoria: "Sandwiches",
-    descripcion: "",
+    descripcion: "Pan calientito con jamón, queso manchego derretido, lechuga, jitomate, frijoles y mayonesa",
     precio: 50,
-    imagen: "Sandwich_de_Jamon.jpeg",  // EXTRAS PENDIENTES
-    opciones: [
-      {
-        label: "Extras", tipo: "check",
-        items: [
-          { label: ".....", precio: 0 }
-        ]
-      }
-    ]
+    imagen: "Sandwich_de_Jamon.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: ".....", precio: 0 }] }]
   },
 
   {
     nombre: "Sandwich de Milanesa de pollo",
     categoria: "Sandwiches",
-    descripcion: "...", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Pan calientito con milanesa crujiente, queso manchego derretido, lechuga, jitomate, frijoles y mayonesa",
     precio: 50,
-    imagen: "Sandwich_de_Milanesa_de_pollo.jpeg",  // EXTRAS PENDIENTES
+    imagen: "Sandwich_de_pollo.jpeg",
   },
 
   {
     nombre: "Club Sandwich",
     categoria: "Sandwiches",
-    descripcion: "Pollo deshebrado, jamón, jitomate, lechuga, tocino, queso manchego y papas a la francesa", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Pollo deshebrado, jamón, jitomate, lechuga, tocino, queso manchego y papas a la francesa",
     precio: 120,
-    imagen: "Club_Sandwich.jpeg",  // EXTRAS PENDIENTES
+    imagen: "Club_Sandwich.jpeg",
   },
 
-    /* ── TORTAS ─────────────────────────────────────────── */
+  /* ── TORTAS ─────────────────────────────────────────── */
 
   {
     nombre: "Torta de milanesa de pollo",
     categoria: "Tortas",
-    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir",
     precio: 58,
-    imagen: "Torta_de_milanesa_de_pollo.jpeg",  // EXTRAS PENDIENTES
-    opciones: [
-      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
-    ]
+    imagen: "Torta_de_milanesa_de_pollo.jpeg",
+    opciones: [{ label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }]
   },
 
   {
     nombre: "Torta de milanesa de cerdo",
     categoria: "Tortas",
-    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir",
     precio: 58,
-    imagen: "Torta_de_milanesa_de_cerdo.jpeg",  // EXTRAS PENDIENTES
-    opciones: [
-      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
-    ]
+    imagen: "Torta_de_milanesa_de_cerdo.jpeg",
+    opciones: [{ label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }]
   },
 
   {
     nombre: "Torta de milanesa de res",
     categoria: "Tortas",
-    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir",
     precio: 60,
-    imagen: "Torta_de_milanesa_de_res.jpeg",  // EXTRAS PENDIENTES
-    opciones: [
-      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
-    ]
+    imagen: "Torta_de_milanesa_de_res.jpeg",
+    opciones: [{ label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }]
   },
 
   {
     nombre: "Torta de milanesa con papas",
     categoria: "Tortas",
-    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
-    precio: 45,
-    imagen: "Torta_de_milanesa_con_papas.jpeg",  // EXTRAS PENDIENTES
-    opciones: [
-      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
-    ]
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir",
+    precio: 55,
+    imagen: "Torta_de_milanesa_con_papas.jpeg",
+    opciones: [{ label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }]
   },
 
   {
-    nombre: "Torta de Bisteck con papas",
+    nombre: "Torta de Bistec con papas",
     categoria: "Tortas",
-    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir",
     precio: 45,
-    imagen: "Torta_de_bisteck_con_papas.jpeg",  // EXTRAS PENDIENTES
-    opciones: [
-      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
-    ]
+    imagen: "Torta_bisteck_con_papas.jpeg",
+    opciones: [{ label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }]
   },
 
   {
     nombre: "Torta de jamon",
     categoria: "Tortas",
-    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir",
     precio: 45,
-    imagen: "Torta_de_jamon.jpeg",  // EXTRAS PENDIENTES
-    opciones: [
-      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
-    ]
+    imagen: "Torta_de_jamon.jpeg",
+    opciones: [{ label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }]
   },
 
   {
     nombre: "Torta de Salchicha",
     categoria: "Tortas",
-    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Frijoles, Aguacate, Jitomate, Cebolla, Quesillo y picante a elegir",
     precio: 45,
-    imagen: "Torta_de_salchicha.jpeg",  // EXTRAS PENDIENTES
-    opciones: [
-      { label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }
-    ]
+    imagen: "Torta_de_salchicha.jpeg",
+    opciones: [{ label: "Picante", tipo: "radio", items: ["Jalapeño", "Chipotle","Sin picante"] }]
   },
 
+  /* ── TOSTADAS ────────────────────────────────────────────── */
 
-    /* ── TOSTADAS ────────────────────────────────────────────── */
-
-    {
+  {
     nombre: "Tostada de quesillo",
     categoria: "Tostadas",
-    descripcion: "Frijoles, Lechuga, Crema, queso y salsa", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Frijoles, Lechuga, Crema, queso y salsa",
     precio: 30,
-    imagen: "Tostada_de_quesillo.jpeg",  // EXTRAS PENDIENTES
-    opciones: [
-      { label: "Salsa", tipo: "radio", items: ["Roja", "Verde"] }
-    ]
+    imagen: "Tostada_de_quesillo.jpeg",
+    opciones: [{ label: "Salsa", tipo: "radio", items: ["Roja", "Verde"] }]
   },
 
   {
     nombre: "Tostada de pollo",
     categoria: "Tostadas",
-    descripcion: "Frijoles, Lechuga, Crema, queso y salsa", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Frijoles, Lechuga, Crema, queso y salsa",
     precio: 30,
-    imagen: "Tostada_de_pollo.jpeg",  // EXTRAS PENDIENTES
-    opciones: [
-      { label: "Salsa", tipo: "radio", items: ["Roja", "Verde"] }
-    ]
+    imagen: "Tostada_de_pollo.jpeg",
+    opciones: [{ label: "Salsa", tipo: "radio", items: ["Roja", "Verde"] }]
   },
 
   {
     nombre: "Tostada de tinga",
     categoria: "Tostadas",
-    descripcion: "Frijoles, Lechuga, Crema, queso y salsa", // DESCRIPCIÓN PENDIENTE
+    descripcion: "Frijoles, Lechuga, Crema, queso y salsa",
     precio: 30,
-    imagen: "Tostada_de_tinga.jpeg",  // EXTRAS PENDIENTES
-    opciones: [
-      { label: "Salsa", tipo: "radio", items: ["Roja", "Verde"] }
-    ]
+    imagen: "Tostada_de_tinga.jpeg",
+    opciones: [{ label: "Salsa", tipo: "radio", items: ["Roja", "Verde"] }]
   },
 
+  /* ── HAMBURGUESAS ────────────────────────────────────────────── */
 
-   /* ── HAMBURGUESAS ────────────────────────────────────────────── */
-
-    {
-      nombre: "Hamburguesa Clasica",
-      categoria: "Hamburguesas",
-      descripcion: "Carne mixta, jitomate, cebolla, queso amarillo y lechuga", 
-      precio: 59,
-      imagen: "Hamburguesa_Clasica.jpeg",  // EXTRAS PENDIENTES
+  {
+    nombre: "Hamburguesa Clasica",
+    categoria: "Hamburguesas",
+    descripcion: "Carne mixta, jitomate, cebolla, queso amarillo y lechuga",
+    precio: 59,
+    imagen: "Hamburguesa_Clasica.jpeg",
   },
 
-    {
-      nombre: "Hamburguesa Doble",
-      categoria: "Hamburguesas",
-      descripcion: "Doble carne mixta, jitomate, cebolla, queso amarillo, lechuga y tocino", 
-      precio: 59,
-      imagen: "Hamburguesa_Doble.jpeg",  // EXTRAS PENDIENTES
+  {
+    nombre: "Hamburguesa Doble",
+    categoria: "Hamburguesas",
+    descripcion: "Doble carne mixta, jitomate, cebolla, queso amarillo, lechuga y tocino",
+    precio: 79,
+    imagen: "Hamburguesa_Doble.jpeg",
   },
 
-    {
-      nombre: "Hamburguesa Hawaiana",
-      categoria: "Hamburguesas",
-      descripcion: "Carne mixta, jitomate, cebolla, queso amarrillo, lechuga, salchica y piña", 
-      precio: 59,
-      imagen: "Hamburguesa_Hawaiana.jpeg",  // EXTRAS PENDIENTES
+  {
+    nombre: "Hamburguesa Hawaiana",
+    categoria: "Hamburguesas",
+    descripcion: "Carne mixta, jitomate, cebolla, queso amarrillo, lechuga, salchica y piña",
+    precio: 79,
+    imagen: "Hamburguesa_hawaiana.jpeg",
   },
-
 
   /* ── HOT DOGS ────────────────────────────────────────────── */
 
   {
     nombre: "Hot Dog Clasico",
     categoria: "Hot Dogs",
-    descripcion: "Salchicha, jitomate Y cebolla", 
+    descripcion: "Salchicha, jitomate Y cebolla",
     precio: 29,
-    imagen: "Hot_Dog_Clasico.jpeg",  // EXTRAS PENDIENTES
+    imagen: "Hot_Dog.jpeg",
   },
 
   {
     nombre: "Hot dog tocino",
     categoria: "Hot Dogs",
-    descripcion: "Salchicha, jitomate,cebolla, tocino y quesillo",
-    precio: 50,
-    imagen: "Hot_Dog_Tocino.jpeg",  // EXTRAS PENDIENTES
+    descripcion: "Salchicha, jitomate, cebolla, tocino y quesillo",
+    precio: 39,
+    imagen: "Hot_Dog_con_tocino.jpeg",
   },
 
+  /* ── BONELESS ────────────────────────────────────────────── */
 
-  /* ── BONLESS ────────────────────────────────────────────── */
-
- {
+  {
     nombre: "Boneless 220 GRS",
     categoria: "Boneless",
-    descripcion: "....",
+    descripcion: "Trozos de pollo crujiente bañados en tu salsa favorita, acompañados de aderezo y veguetales",
     precio: 59,
-    imagen: "Boneless_220_GRS.jpeg",  // EXTRAS PENDIENTES
+    imagen: "Boneless_450_GRS.jpeg",
     opciones: [
       { label: "Salsa", tipo: "salsa", items: ["Salsa de BBQ", "Habanero", "Salsa Mango Habanero", "Salsa Habanera"] }
     ]
@@ -884,130 +909,94 @@ const productos = [
   {
     nombre: "Boneless 450 GRS",
     categoria: "Boneless",
-    descripcion: "....",
+    descripcion: "Trozos de pollo crujiente bañados en tu salsa favorita, acompañados de aderezo y veguetales",
     precio: 119,
-    imagen: "Boneless_450_GRS.jpeg",  // EXTRAS PENDIENTES
+    imagen: "Boneless_220_GRS.jpeg",
     opciones: [
       { label: "Salsa", tipo: "salsa", items: ["Salsa de BBQ", "Habanero", "Salsa Mango Habanero", "Salsa Habanera"] }
     ]
   },
-
 
   /* ── ALITAS ────────────────────────────────────────────── */
 
   {
     nombre: "Alitas Orden de 5",
     categoria: "Alitas",
-    descripcion: "....",
+    descripcion: "Alitas doradas y jugosas, bañadas eb la salsa de tu eleccion y acompañadas de aderezo",
     precio: 59,
-    imagen: "Alitas_Orden_5.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    imagen: "Alitas_5.jpeg",
     opciones: []
   },
 
   {
     nombre: "Alitas orden de 10",
     categoria: "Alitas",
-    descripcion: "....",
+    descripcion: "Alitas doradas y jugosas, bañadas eb la salsa de tu eleccion y acompañadas de aderezo",
     precio: 119,
-    imagen: "Alitas_Orden_10.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    imagen: "Alitas_10.jpeg",
     opciones: []
   },
-
 
   /* ── PAPAS ────────────────────────────────────────────── */
 
   {
     nombre: "Papas a la Francesa",
     categoria: "Papas",
-    descripcion: "....",
-    precio: 30,
-    imagen: "Papas_a_la_Francesa.jpeg",  // EXTRAS  Y OPCIONES PENDIENTES
+    descripcion: "Papas doraditas y crujientes, preparadas al momento y sazonadas",
+    precio: 35,
+    imagen: "Papas_a_la_Francesa.jpeg",
     opciones: []
   },
 
   {
     nombre: "Papas Gajo",
     categoria: "Papas",
-    descripcion: "....",
+    descripcion: "Papas suaves por dentro y crujientes por fuera, con un toque de especias",
     precio: 35,
-    imagen: "Papas_Gajo.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    imagen: "Papas_Gajo.jpeg",
     opciones: []
   },
 
-
   /* ── BEBIDAS ────────────────────────────────────────────── */
-  /*
-     Cada bebida DEBE tener  subcategoria  con uno de estos valores exactos:
-     "Calientes" | "Frías" | "Jugos y Licuados" | "Jarras de Agua" | "Refrescos"
-  */
-
 
   {
     nombre: "Soda italiana mora azul",
     categoria: "Bebidas",
     subcategoria: "Sodas Italianas",
-    descripcion: "....",
-    precio: 55, 
-    imagen: "Soda_Italiana_Mora_Azul.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-      {
-        label: "Extras", tipo: "check",
-        items: [
-          { label: "Perlas explosivas de fresa", precio: 10}
-        ]
-      }
-    ]
+    descripcion: "refrescante combinación de jarabe de mora azul agua mineral, adicional puedes agregar perlas explosivas",
+    precio: 55,
+    imagen: "Soda_mora.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Perlas explosivas de fresa", precio: 10}] }]
   },
 
   {
     nombre: "Soda italiana Kiwi",
     categoria: "Bebidas",
     subcategoria: "Sodas Italianas",
-    descripcion: "....",
-    precio: 55, 
-    imagen: "Soda_Italiana_Kiwi.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-      {
-        label: "Extras", tipo: "check",
-        items: [
-          { label: "Perlas explosivas de fresa", precio: 10}
-        ]
-      }
-    ]
+    descripcion: "refrescante combinación de jarabe de kiwi y agua mineral, adicional puedes agregar perlas explosivas",
+    precio: 55,
+    imagen: "Soda_kiwi.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Perlas explosivas de fresa", precio: 10}] }]
   },
 
-   {
-    nombre: "Soda italiana De Frambueza",
+  {
+    nombre: "Soda italiana De Framboeza",
     categoria: "Bebidas",
     subcategoria: "Sodas Italianas",
-    descripcion: "....",
-    precio: 55, 
-    imagen: "Soda_Italiana_Frambueza.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-      {
-        label: "Extras", tipo: "check",
-        items: [
-          { label: "Perlas explosivas de fresa", precio: 10}
-        ]
-      }
-    ]
+    descripcion: "refrescante combinación de jarabe de framboesa y agua mineral, adicional puedes agregar perlas explosivas",
+    precio: 55,
+    imagen: "Soda_fresa.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Perlas explosivas de fresa", precio: 10}] }]
   },
 
   {
     nombre: "Soda italiana De Maracuyá",
     categoria: "Bebidas",
     subcategoria: "Sodas Italianas",
-    descripcion: "....",
-    precio: 55, 
-    imagen: "Soda_Italiana_Maracuyá.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-      {
-        label: "Extras", tipo: "check",
-        items: [
-          { label: "Perlas explosivas de fresa", precio: 10}
-        ]
-      }
-    ]
+    descripcion: "refrescante combinación de jarabe de maracuyá y agua mineral, adicional puedes agregar perlas explosivas",
+    precio: 55,
+    imagen: "Soda_Maracuya.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Perlas explosivas de fresa", precio: 10}] }]
   },
 
   {
@@ -1015,10 +1004,9 @@ const productos = [
     categoria: "Bebidas",
     subcategoria: "Calientes",
     descripcion: "Cafe americano caliente",
-    precio: 45,
-    imagen: "Cafe_Americano.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    precio: 35,
+    imagen: "Cafe_Americano.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Frio", precio: 5}] }]
   },
 
   {
@@ -1026,45 +1014,42 @@ const productos = [
     categoria: "Bebidas",
     subcategoria: "Calientes",
     descripcion: "Cafe capuchino caliente",
-    precio: 50,
-    imagen: "Cafe_Capuchino.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    precio: 45,
+    imagen: "Capucchino_clasico.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Frio", precio: 5 }] }]
   },
-  
+
   {
     nombre: "Cafe Capuchino de sabor",
     categoria: "Bebidas",
     subcategoria: "Calientes",
     descripcion: "Cafe capuchino caliente",
-    precio: 50,
-    imagen: "Cafe_Capuchino.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    precio: 55,
+    imagen: "Capucchino_rompope.jpeg",
     opciones: [
-      { label: "Sabor", tipo: "radio", items: ["Vainilla", "Rompope", "Almendra", "Crema irlandesa"] }
+      { label: "Sabor", tipo: "radio", items: ["Vainilla", "Rompope", "Almendra", "Crema irlandesa"] },
+      { label: "Extras", tipo: "check", items: [{ label: "Frio", precio: 5}] }
     ]
   },
-  
 
   {
     nombre: "Cafe Espresso",
     categoria: "Bebidas",
     subcategoria: "Calientes",
     descripcion: "Cafe espresso caliente",
-    precio: 25,
-    imagen: "Cafe_Espresso.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    precio: 30,
+    imagen: "Espresso.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Frio", precio: 5}] }]
   },
 
   {
     nombre: "Flat White",
     categoria: "Bebidas",
     subcategoria: "Calientes",
-    descripcion: "....", // DESCRIPCIÓN PENDIENTE
-    precio: 45,
-    imagen: "Flat_White.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    descripcion: "....",
+    precio: 50,
+    imagen: "Flat_White.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Frio", precio: 5}] }]
   },
 
   {
@@ -1073,9 +1058,8 @@ const productos = [
     subcategoria: "Calientes",
     descripcion: "Cafe latte caliente",
     precio: 45,
-    imagen: "Latte.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    imagen: "Latte.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Frio", precio: 5 }] }]
   },
 
   {
@@ -1084,9 +1068,8 @@ const productos = [
     subcategoria: "Calientes",
     descripcion: "Chai cocoa caliente",
     precio: 45,
-    imagen: "Chai_Cocoa.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    imagen: "Chai_Cocoa.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Frio", precio: 5 }] }]
   },
 
   {
@@ -1095,9 +1078,8 @@ const productos = [
     subcategoria: "Calientes",
     descripcion: "Chai vainilla caliente",
     precio: 45,
-    imagen: "Chai_Vainilla.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    imagen: "Chai_Vainilla.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Frio", precio: 5 }] }]
   },
 
   {
@@ -1106,9 +1088,18 @@ const productos = [
     subcategoria: "Calientes",
     descripcion: "Chocolate caliente",
     precio: 45,
-    imagen: "Chocolate.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    imagen: "Chocolate.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Frio", precio: 5 }] }]
+  },
+
+  {
+    nombre: "Chocolate con bonbones",
+    categoria: "Bebidas",
+    subcategoria: "Calientes",
+    descripcion: "Chocolate caliente con bonbones",
+    precio: 55,
+    imagen: "Chocolate_con_bombones.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Frio", precio: 5 }] }]
   },
 
   {
@@ -1116,163 +1107,328 @@ const productos = [
     categoria: "Bebidas",
     subcategoria: "Calientes",
     descripcion: "Té caliente",
-    precio: 45,
-    imagen: "Te.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    precio: 20,
+    imagen: "Te.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Frio", precio: 5 }] }]
   },
 
-  
   {
     nombre: "Cafe de olla refil",
     categoria: "Bebidas",
     subcategoria: "Calientes",
     descripcion: "Cafe de olla refil caliente",
     precio: 45,
-    imagen: "Cafe_De_Olla_Refil.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    imagen: "Cafe_de_olla.jpeg",
+    opciones: [{ label: "Extras", tipo: "check", items: [{ label: "Frio", precio: 5 }] }]
+  },
+
+    {
+    nombre: "Frappucino ",
+    categoria: "Bebidas",
+    subcategoria: "Frappes",
+    descripcion: "Café, leche y hielo combinados en una bebida cremosa con el balance perfecto de sabor.",
+    precio: 45,
+    imagen: "Frapuchino.jpeg",
+  },
+
+  {
+    nombre: "Caramel Macchiato ",
+    categoria: "Bebidas",
+    subcategoria: "Frappes",
+    descripcion: "Café, leche, hielo y caramelo mezclados para una experiencia suave y dulce.",
+    precio: 45,
+    imagen: "Frappe_Mazapan.jpeg",
+  },
+
+  {
+    nombre: "Frappe de fresa",
+    categoria: "Bebidas",
+    subcategoria: "Frappes",
+    descripcion: "Leche, hielo y fresa combinados para crear un frappé fresco, dulce y cremoso.",
+    precio: 45,
+    imagen: "Frappe_Fresa.jpeg",
+  },
+  
+  {
+    nombre: "Frappe de mango",
+    categoria: "Bebidas",
+    subcategoria: "Frappes",
+    descripcion: "Mango e hielo licuados para una bebida tropical, refrescante y llena de sabor.",
+    precio: 45,
+    imagen: "Frappe_Mango.jpeg",
+  },
+
+  {
+    nombre: "Frappe de galleta oreo",
+    categoria: "Bebidas",
+    subcategoria: "Frappes",
+    descripcion: "Leche, hielo y galleta Oreo mezclados hasta obtener una textura suave y cremosa.",
+    precio: 45,
+    imagen: "Frappe_Oreo.jpeg",
+  },
+
+  {
+    nombre: "Frappe de pepino con limon",
+    categoria: "Bebidas",
+    subcategoria: "Frappes",
+    descripcion: "Pepino fresco, limón e hielo mezclados para una opción ligera y sumamente refrescante.",
+    precio: 45,
+    imagen: "Frappe_Pepino.jpeg",
+  },
+
+  {
+    nombre: "Frappe de picafresa",
+    categoria: "Bebidas",
+    subcategoria: "Frappes",
+    descripcion: "Leche, hielo y el inconfundible sabor de la picafresa en una bebida cremosa y refrescante.",
+    precio: 45,
+    imagen: "Frappe_Picafresa.jpeg",
+  },
+
+  {
+    nombre: "Frappe de mazapan",
+    categoria: "Bebidas",
+    subcategoria: "Frappes",
+    descripcion: "Leche, hielo y mazapán tradicional licuados para un sabor dulce y lleno de tradición.",
+    precio: 45,
+    imagen: "Frappe_Mazapan.jpeg",
   },
 
   {
     nombre: "Jugo Boing",
     categoria: "Bebidas",
     subcategoria: "Frias",
-    descripcion: "Jugo Boing frío",
-    precio: 15,
-    imagen: "Jugo_Boing.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    precio: 25,
+    imagen: "Boing.jpeg",
   },
 
   {
-    nombre: "Limonada",
+    nombre: "Limonada Natural",
     categoria: "Bebidas",
     subcategoria: "Frias",
-    descripcion: "Limonada fría",
-    precio: 35,
-    imagen: "Limonada.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    descripcion: "La combinación perfecta de limón fresco, agua y hielo.",
+    precio: 25,
+    imagen: "Limonada_natural.jpeg",
   },
 
   {
     nombre: "Limonda mineral",
     categoria: "Bebidas",
     subcategoria: "Frias",
-    descripcion: "Limonda mineral fría",
-    precio: 20,
-    imagen: "Limonda_Mineral.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    descripcion: "Limón fresco y agua mineral y hielo.",
+    precio: 30,
+    imagen: "Limonada_mineral.jpeg",
   },
 
   {
     nombre: "Sangria Preparada",
     categoria: "Bebidas",
     subcategoria: "Frias",
-    descripcion: "Sangria preparada fría",
+    descripcion: "Refresco de sangría con un toque de limón fresco y  hielo.",
+    precio: 30,
+    imagen: "Sangria_Preparada.jpeg",
+  },
+
+  {
+    nombre:"Tizana",
+    categoria: "Bebidas",
+    subcategoria: "Frias",
+    descripcion: "Tizana Jamaica-Arándano Deliciosa mezcla de jamaica y arándanos, una bebida refrescante con el balance perfecto entre dulzura y acidez.",
     precio: 55,
-    imagen: "Sangria_Preparada.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    imagen: "Tizana_de_jamaica.jpeg",
+    opciones: [{ label: "Tipo", tipo: "check", items: [{ label: "caliente", precio: -5 }] }]
+  },
+
+  {
+    nombre: "Taro",
+    categoria: "Bebidas",
+    subcategoria: "Frias",
+    descripcion: "raíz de taro, conocida por su sabor suave, cremoso y ligeramente dulce, con delicadas notas de vainilla y nuez.",
+    precio: 45,
+    imagen: "Taro.jpeg"
   },
 
   {
     nombre: "Coca cola",
     categoria: "Bebidas",
     subcategoria: "Frias",
-    descripcion: "Coca cola fría",
     precio: 30,
-    imagen: "Coca_Cola.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
-  },
-
-  {
-    nombre: "Limonada",
-    categoria: "Bebidas",
-    subcategoria: "Frias",
-    descripcion: "Limonada fría",
-    precio: 35,
-    imagen: "Limonada.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    imagen: "Coca_Cola.jpeg",
   },
 
   {
     nombre: "Malteada de Chocolate",
     categoria: "Bebidas",
     subcategoria: "Malteadas",
-    descripcion: "Malteada de chocolate caliente",
+    descripcion: "Helado de chocolate y leche mezclados para crear una bebida suave cremosa y llena de sabor.",
     precio: 50,
-    imagen: "Malteada_De_Chocolate.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    imagen: "Malteada_Chocolate.jpeg",
+  },
+
+    {
+    nombre: "Malteada de Vainilla",
+    categoria: "Bebidas",
+    subcategoria: "Malteadas",
+    descripcion: "Helado de vainilla y leche mezclados para crear una bebida suave cremosa y llena de sabor.",
+    precio: 50,
+    imagen: "Malteada_Vainilla.jpeg",
   },
 
   {
     nombre: "Malteada de fresa",
     categoria: "Bebidas",
     subcategoria: "Malteadas",
-    descripcion: "Malteada de fresa caliente",
+    descripcion: "Helado de fresa, leche batidos hasta lograr una bebida cremosa, dulce y refrescante.",
     precio: 50,
-    imagen: "Malteada_De_Fresa.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    imagen: "Malteada_Fresa.jpeg",
+  },
+
+  {
+    nombre: "Agua embotellada 600 ml",
+    categoria: "Bebidas",
+    subcategoria: "Frias",
+    precio: 15,
+    imagen: "Agua_Embotellada.jpeg",
   },
 
   {
     nombre: "Cerveza Victoria",
     categoria: "Bebidas",
     subcategoria: "Cerveza",
-    descripcion: "...",
-    precio: 45,
-    imagen: "Cerveza_Victoria.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    precio: 35,
+    imagen: "Victoria.jpeg",
   },
 
   {
     nombre: "XX lager",
     categoria: "Bebidas",
     subcategoria: "Cerveza",
-    descripcion: "...",
-    precio: 45,
-    imagen: "XX_Lager.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    precio: 35,
+    imagen: "Dos_equis.jpeg",
   },
 
   {
     nombre: "Modelo especial",
     categoria: "Bebidas",
     subcategoria: "Cerveza",
-    descripcion: "...",
-    precio: 30,
-    imagen: "Modelo_Especial.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
-    opciones: [
-    ]
+    precio: 45,
+    imagen: "Negra_modelo.jpeg",
   },
 
-   {
+  {
     nombre: "Negra modelo",
     categoria: "Bebidas",
     subcategoria: "Cerveza",
-    descripcion: "...",
-    precio: 30,
-    imagen: "Negra_Modelo.jpeg",  // EXTRAS Y OPCIONES PENDIENTES
+    precio: 45,
+    imagen: "Modelo.jpeg",
+  },
+
+  /* ── Extras y especiales ────────────────────────────────────────────── */
+
+  {
+    nombre: "Pan dulce",
+    categoria: "Extras y Especiales",
+    precio: 10,
+    imagen: "Pan_Dulce.jpeg",
+  },
+
+  {
+    nombre: "Croissant",
+    categoria: "Extras y Especiales",
+    descripcion: "Croissant suave y hojaldrado con jamón, queso amarillo derretio, jitomate fresco y mayonesa.",
+    precio: 50,
+    imagen: "Cuaso.jpeg",
+  },
+
+  {
+    nombre: "Tarro chelado",
+    categoria: "Extras y Especiales",
+    descripcion: "El clásico tarro escarchado con limón y sal.",
+    precio: 25,
+    imagen: "Tarro_Cheelado.jpeg",
+  },
+
+  {
+    nombre: "Tarro michelado",
+    categoria: "Extras y Especiales",
+    descripcion: "Tarro preparado con limón, sal y salsas para quienes buscan un sabor más intenso.",
+    precio: 25,
+    imagen: "Tarro_Michelado.jpeg",
     opciones: [
+      { label: "Salsa", tipo: "radio", items: ["Salsa inglesa", "Salsa Maggi", "Salsa Tabasco"] }
     ]
   },
 
+    {
+    nombre: "Leche de almendra",
+    categoria: "Extras y Especiales",
+    precio: 25,
+    imagen: "Shot_leche_almendras.jpeg",
+  },
+
+  {
+    nombre: "Leche deslactosada",
+    categoria: "Extras y Especiales",
+    precio: 25,
+    imagen: "Shot_leche_deslactosada.jpeg",
+  },
+
+  //proteinas
+  
+  {
+    nombre: "Pechuga asada",
+    categoria: "Proteinas",
+    precio: 20,
+  },
+
+  {
+    nombre: "Bistec de puerco",
+    categoria: "Proteinas",
+    precio: 20,
+
+  },
+
+  {
+    nombre: "Huevo estrellado",
+    categoria: "Proteinas",
+    precio: 10,
+
+  },
+
+  {
+    nombre: "Milanesa",
+    categoria: "Proteinas",
+    precio: 25,
+
+  },
+
+  {
+    nombre: "Bistec de res",
+    categoria: "Proteinas",
+    precio: 23,
+
+  },
+
+  {
+    nombre: "Tocino",
+    categoria: "Proteinas",
+    precio: 15,
+
+  },
+
+  {
+    nombre: "Pollo deshebrado",
+    categoria: "Proteinas",
+    precio: 15,
+
+  }
 ];
 
 /* ================================================================
    ESTADO
 ================================================================ */
 
-let categoriaActiva   = "todos";
+let categoriaActiva    = "todos";
 let subCategoriaActiva = "todas";
 
 /* ================================================================
@@ -1281,15 +1437,12 @@ let subCategoriaActiva = "todas";
 
 function getListaFiltrada() {
   let lista = productos;
-
   if (categoriaActiva !== "todos") {
     lista = lista.filter(p => p.categoria === categoriaActiva);
   }
-
   if (categoriaActiva === "Bebidas" && subCategoriaActiva !== "todas") {
     lista = lista.filter(p => p.subcategoria === subCategoriaActiva);
   }
-
   return lista;
 }
 
@@ -1301,29 +1454,62 @@ const menuContainer = document.getElementById("menuContainer");
 
 function renderMenu(lista) {
   menuContainer.innerHTML = "";
+
   lista.forEach((item) => {
+
     const gi = productos.indexOf(item);
     const opcionesHTML = renderOpciones(item.opciones, gi);
 
-    // En modo Bebidas filtralas por subcategoria → muestra subcategoría en el badge
-    const badgeTexto = (item.subcategoria && categoriaActiva === "Bebidas")
+    const badgeTexto =
+      (item.subcategoria && categoriaActiva === "Bebidas")
       ? item.subcategoria
       : item.categoria;
 
-    menuContainer.innerHTML += `
-    <div class="card">
+    const imagenHTML = item.imagen
+      ? `
       <div class="card-img-wrap">
         <img src="${item.imagen}" alt="${item.nombre}" loading="lazy">
         <div class="card-badge">${badgeTexto}</div>
       </div>
+      `
+      : `
+      <div class="card-badge sin-imagen">${badgeTexto}</div>
+      `;
+
+    menuContainer.innerHTML += `
+    <div class="card">
+
+      ${imagenHTML}
+
       <div class="card-content">
         <h3>${item.nombre}</h3>
-        <p>${item.descripcion}</p>
+        <p>${item.descripcion || ''}</p>
+
         ${opcionesHTML}
+
+        <div class="comentario-prod-wrap">
+          <div class="comentario-prod-label">
+            Alergia, Comentario, Etc
+          </div>
+
+          <textarea
+            class="comentario-prod-input"
+            id="comentario-${gi}"
+            rows="2"
+            placeholder="Ej: sin cebolla, extra salsa, bien cocido…"
+          ></textarea>
+        </div>
+
         <div class="card-bottom">
           <div class="price">$${item.precio}</div>
-          <button class="add-btn" onclick="agregarCarrito(${gi}, this)">+ Agregar</button>
+
+          <button
+            class="add-btn"
+            onclick="agregarCarrito(${gi}, this)">
+            + Agregar
+          </button>
         </div>
+
       </div>
     </div>`;
   });
@@ -1339,7 +1525,7 @@ function renderOpciones(opciones, idx) {
       <div class="opciones-grupo-label">${grupo.label}</div>
       <div class="opciones-chips">`;
 
-   grupo.items.forEach((op) => {
+    grupo.items.forEach((op) => {
       if (grupo.tipo === "salsa") {
         const info = picanteSalsas[op] || { chiles: 1, texto: "Suave" };
         const chileEmojis = "🌶️".repeat(info.chiles);
@@ -1419,16 +1605,29 @@ function agregarCarrito(index, btn) {
   const { grupos, precioExtrasTotal } = leerOpciones(index);
   const precioFinal = productos[index].precio + precioExtrasTotal;
 
-  carrito.push({ ...productos[index], precioFinal, opcionesSeleccionadas: grupos });
+  // Leer comentario del producto
+  const comentarioEl = document.getElementById(`comentario-${index}`);
+  const comentario   = comentarioEl ? comentarioEl.value.trim() : "";
+
+  carrito.push({
+    ...productos[index],
+    precioFinal,
+    opcionesSeleccionadas: grupos,
+    comentarioProd: comentario
+  });
+
   actualizarCarrito();
 
   const resumen = Object.values(grupos).flat().map(o => o.texto);
-  const extra = resumen.length ? ` (${resumen.join(", ")})` : "";
+  const extra   = resumen.length ? ` (${resumen.join(", ")})` : "";
   showToast("✓ " + productos[index].nombre + extra + " agregado");
+
+  // Limpiar el textarea después de agregar
+  if (comentarioEl) comentarioEl.value = "";
 
   if (btn) {
     btn.classList.add("added");
-    btn.textContent = "✓ Agregado";
+    btn.textContent = " Agregado";
     setTimeout(() => { btn.classList.remove("added"); btn.textContent = "+ Agregar"; }, 1500);
   }
 }
@@ -1462,12 +1661,17 @@ function actualizarCarrito() {
       }
     });
 
+    const comentarioHTML = item.comentarioProd
+      ? `<div class="item-comentario"> ${item.comentarioProd}</div>`
+      : "";
+
     itemsEl.innerHTML += `
     <div class="cart-item">
       <div class="cart-item-info">
         <h4>${item.nombre}</h4>
         <div class="item-price">$${item.precioFinal}</div>
         ${optsHTML ? `<div class="item-opts">${optsHTML}</div>` : ""}
+        ${comentarioHTML}
       </div>
       <button class="remove-btn" onclick="eliminar(${i})">✕</button>
     </div>`;
@@ -1492,7 +1696,7 @@ function toggleCart() {
 ================================================================ */
 
 function enviarWhatsApp() {
-  if (carrito.length === 0) { showToast("⚠️ Tu carrito está vacío"); return; }
+  if (carrito.length === 0) { showToast("Tu carrito está vacío"); return; }
 
   const nombre    = document.getElementById("nombre").value.trim();
   const direccion = document.getElementById("direccion").value.trim();
@@ -1517,11 +1721,16 @@ function enviarWhatsApp() {
       }
     });
 
+    // Incluir comentario del producto si existe
+    if (item.comentarioProd) {
+      msg += " Comentario: " + item.comentarioProd + "%0A";
+    }
+
     total += item.precioFinal;
   });
 
   msg += "%0A💰 Total: $" + total;
-  if (notas) msg += "%0A%0A Notas: " + notas;
+  if (notas) msg += "%0A%0A Notas generales: " + notas;
 
   window.open("https://wa.me/522461066503?text=" + msg);
 }
@@ -1540,7 +1749,6 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
 
     if (categoriaActiva === "Bebidas") {
       subWrap.classList.add("visible");
-      // Resetear sub-filtro
       subCategoriaActiva = "todas";
       document.querySelectorAll(".sub-btn").forEach(b => b.classList.remove("active"));
       document.querySelector('.sub-btn[data-sub="todas"]').classList.add("active");
@@ -1598,7 +1806,6 @@ function generarQR() {
   const size = 200;
   canvas.width = size; canvas.height = size;
   const ctx = canvas.getContext('2d');
-  // QR simple visual — carga qrcode.js desde CDN
   if (window.QRCode) {
     canvas.parentNode.innerHTML = '';
     const div = document.createElement('div');
@@ -1609,17 +1816,8 @@ function generarQR() {
 
 function compartirPor(red) {
   const url = encodeURIComponent(SHARE_URL);
-  const texto = encodeURIComponent('🍽️ Visita el menú de CALLI — Café & Bar en Huejotzingo');
-
   const links = {
-    whatsapp: `https://wa.me/?text=${texto}%20${url}`,
-  };
-  window.open(links[red], '_blank');
-}
-function compartirPor(red) {
-  const url = encodeURIComponent(SHARE_URL);
-  const links = {
-    whatsapp:  `https://wa.me/?text=%20${url}`,
+    whatsapp: `https://wa.me/?text=%20${url}`,
   };
   window.open(links[red], '_blank');
 }
@@ -1629,9 +1827,6 @@ function copiarLink() {
 }
 
 </script>
-<!-- Panel compartir -->
-
-</div>
 
 <div class="share-overlay" id="shareOverlay" onclick="cerrarCompartir()"></div>
 <div class="share-panel" id="sharePanel">
@@ -1653,5 +1848,6 @@ function copiarLink() {
       Copiar link
     </a>
   </div>
+</div>
 </body>
 </html>

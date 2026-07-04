@@ -639,10 +639,10 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
       <div id="datosTransferencia" class="datos-transferencia" style="display:none;">
         <h4>Datos para transferencia</h4>
 
-        <p><strong>Banco:</strong> BBVA</p>
-        <p><strong>Titular:</strong> TU NOMBRE</p>
-        <p><strong>Cuenta:</strong> 1234567890</p>
-        <p><strong>CLABE:</strong> 012345678901234567</p>
+        <p><strong>CLABE:</strong> 722969010380714182</p>
+        <p><strong>Beneficiario:</strong> Susana Miron Tovar</p>
+        <p><strong>Institución:</strong> Mercado Pago W</p>
+        <p><strong>Celular vinculado a Dimo®:</strong> 522228081452</p>
 
         <small>
           Una vez realizada la transferencia envía el comprobante por WhatsApp.
@@ -2232,6 +2232,11 @@ function toggleCart() {
 ================================================================ */
 
 
+function generarIdPedido() {
+  const num = Math.floor(1000000000 + Math.random() * 9000000000);
+  return "#MX-" + num;
+}
+
 function generarFechaHora() {
   const ahora = new Date();
   const fecha = ahora.toLocaleDateString("es-MX", { day: "2-digit", month: "2-digit", year: "numeric" });
@@ -2251,10 +2256,12 @@ function enviarWhatsApp() {
   if (!nombre) { showToast("Por favor ingresa tu nombre"); return; }
   if (tipoServicio === "domicilio" && !direccion) { showToast("Por favor ingresa tu dirección"); return; }
 
+  const idPedido = generarIdPedido();
   const fechaHora = generarFechaHora();
   const servicioTexto = tipoServicio === "domicilio" ? "A domicilio" : "Para recoger";
 
   let msg = "☕🤎 ¡Hola! Me gustaría realizar el siguiente pedido.\n\n";
+  msg += "🆔 Pedido: " + idPedido + "\n";
   msg += "📅 Fecha: " + fechaHora + "\n";
   msg += "📍 Tipo de servicio: " + servicioTexto + "\n\n";
 

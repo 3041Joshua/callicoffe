@@ -725,7 +725,7 @@ const productos = [
     imagen: "Chilaquiles_Rellenos.jpeg",
     opciones: [
       { label: "Salsa",   tipo: "radio", items: ["Rojos", "Verdes"] },
-      { label: "Relleno", tipo: "radio", items: ["Papa", "Tinga", "Quesillo", "Pollo"] },
+      { label: "Relleno", tipo: "check", items: ["Papa", "Tinga", "Quesillo", "Pollo"] },
      {
         label: "Proteínas", tipo: "check",
         items: [
@@ -795,7 +795,7 @@ const productos = [
     imagen: "Flautas_Ahogadas.jpeg",
     opciones: [
       { label: "Salsa",   tipo: "radio", items: ["Rojas", "Verdes"] },
-      { label: "Relleno", tipo: "radio", items: ["Papa", "Tinga", "Quesillo", "Pollo"] },
+      { label: "Relleno", tipo: "check", items: ["Papa", "Tinga", "Quesillo", "Pollo"] },
     ]
   },
 
@@ -1987,11 +1987,12 @@ html += `<span class="chip radio"
   ${texto}${precioLabel}
 </span>`;
     } else {
-        const precioExtra = op.precio || 0;
+        const texto = typeof op === "object" ? op.label : op;
+        const precioExtra = typeof op === "object" ? (op.precio || 0) : 0;
         const precioLabel = precioExtra > 0 ? `<span class="chip-price">+$${precioExtra}</span>` : "";
         html += `<span class="chip"
           data-prod="${idx}" data-grupo="${gi}" data-tipo="check" data-precio="${precioExtra}"
-          onclick="toggleChip(this)">${op.label}${precioLabel}</span>`;
+          onclick="toggleChip(this)">${texto}${precioLabel}</span>`;
       }
     });
 
@@ -2313,7 +2314,7 @@ function enviarWhatsApp() {
 
   msg += "\n✨ Gracias por tu pedido. En cuanto recibamos este mensaje, comenzaremos a prepararlo. ¡Nos vemos pronto! 🤎☕";
 
-  window.open("https://wa.me/522461066503?text=" + encodeURIComponent(msg));
+  window.open("https://wa.me/522207315160?text=" + encodeURIComponent(msg));
 }
 
 /* ================================================================

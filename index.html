@@ -714,20 +714,6 @@ const picanteSalsas = {
 
 const productos = [
 
-  /* ── ESPECIALES (solo sábados y domingos) ─────────────────── */
-
-  {
-    nombre: "Pozole",
-    categoria: "Especiales",
-    descripcion: "Rico pozole",
-    precio: 50,
-    imagen: "Pozole.jpeg",
-    diasDisponibles: [0, 6], // 0 = domingo, 6 = sábado
-    opciones: [
-      { label: "Salsa", tipo: "radio", items: ["Pollo", "Puerco", "Mixto"] }
-    ]
-  },
-
   /* ── DESAYUNOS ─────────────────────────────────────────── */
 
   {
@@ -1289,6 +1275,20 @@ const productos = [
     precio: 35,
     imagen: "Papas_Gajo.jpeg",
     opciones: []
+  },
+
+    /* ── ESPECIALES (solo sábados y domingos) ─────────────────── */
+
+  {
+    nombre: "Pozole",
+    categoria: "Especiales",
+    descripcion: "Rico pozole",
+    precio: 50,
+    imagen: "Pozole.jpeg",
+    diasDisponibles: [0, 6], // 0 = domingo, 6 = sábado
+    opciones: [
+      { label: "Salsa", tipo: "radio", items: ["Pollo", "Puerco", "Mixto"] }
+    ]
   },
 
   /* ── BEBIDAS ────────────────────────────────────────────── */

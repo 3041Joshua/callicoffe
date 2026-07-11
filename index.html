@@ -160,6 +160,23 @@ header {
 }
 .card:hover img { transform: scale(1.06); }
 .card-badge { position: absolute; top: 14px; left: 14px; background: white; border-radius: 99px; padding: 5px 14px; font-size: .72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green); box-shadow: 0 4px 12px rgba(0,0,0,.12); }
+
+/* ── PRODUCTO NO DISPONIBLE (fuera de sus días) ── */
+.card.no-disponible { opacity: .6; filter: grayscale(.5); }
+.card.no-disponible:hover { transform: none; box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+.card-badge.finde { background: var(--brown); color: white; }
+.aviso-disponibilidad {
+  margin-top: 10px;
+  padding: 9px 14px;
+  border-radius: 12px;
+  background: rgba(140,91,67,.1);
+  color: var(--brown);
+  font-size: .8rem;
+  font-weight: 600;
+  text-align: center;
+}
+.card.no-disponible .add-btn { background: #ccc !important; cursor: not-allowed; pointer-events: none; }
+.card.no-disponible .opciones-wrap { opacity: .5; pointer-events: none; }
 .card-content { padding: 25px; }
 .card h3 { font-size: 1.7rem; font-family: 'Cormorant Garamond', serif; color: var(--dark); }
 .card p { margin-top: 10px; color: var(--muted); line-height: 1.7; font-size: .88rem; }
@@ -498,6 +515,7 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
     <button class="filter-btn" data-cat="Boneless">Boneless</button>
     <button class="filter-btn" data-cat="Alitas">Alitas</button>
     <button class="filter-btn" data-cat="Papas">Papas</button>
+    <button class="filter-btn" data-cat="Especiales">Especiales 🎉</button>
     <button class="filter-btn" data-cat="Bebidas">Bebidas ▾</button>
   </div>
 
@@ -636,6 +654,10 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
         </button>
       </div>
 
+      <div id="datosEfectivo" class="datos-transferencia" style="display:block;">
+        <p>🤎 ¿Tu pago será en efectivo? Cuéntanos con cuánto vas a pagar para preparar tu cambio y hacer tu entrega más rápida. ¡Gracias!</p>
+      </div>
+
       <div id="datosTransferencia" class="datos-transferencia" style="display:none;">
         <h4>Datos para transferencia</h4>
 
@@ -691,6 +713,20 @@ const picanteSalsas = {
 };
 
 const productos = [
+
+  /* ── ESPECIALES (solo sábados y domingos) ─────────────────── */
+
+  {
+    nombre: "Pozole",
+    categoria: "Especiales",
+    descripcion: "Rico pozole",
+    precio: 50,
+    imagen: "Pozole.jpeg",
+    diasDisponibles: [0, 6], // 0 = domingo, 6 = sábado
+    opciones: [
+      { label: "Salsa", tipo: "radio", items: ["Pollo", "Puerco", "Mixto"] }
+    ]
+  },
 
   /* ── DESAYUNOS ─────────────────────────────────────────── */
 
@@ -1829,9 +1865,11 @@ function seleccionarPago(tipo){
     if(tipo=="efectivo"){
         document.getElementById("btnEfectivo").classList.add("active");
         document.getElementById("datosTransferencia").style.display="none";
+        document.getElementById("datosEfectivo").style.display="block";
     }else{
         document.getElementById("btnTransferencia").classList.add("active");
         document.getElementById("datosTransferencia").style.display="block";
+        document.getElementById("datosEfectivo").style.display="none";
     }
 
 }
@@ -1874,6 +1912,12 @@ function getListaFiltrada() {
   return lista;
 }
 
+function productoDisponibleHoy(item) {
+  if (!item.diasDisponibles) return true;
+  const hoy = new Date().getDay(); // 0=domingo ... 6=sábado
+  return item.diasDisponibles.includes(hoy);
+}
+
 /* ================================================================
    RENDER
 ================================================================ */
@@ -1888,30 +1932,41 @@ function renderMenu(lista) {
     const gi = productos.indexOf(item);
     const opcionesHTML = renderOpciones(item.opciones, gi);
 
+    const disponibleHoy = productoDisponibleHoy(item);
+
     const badgeTexto =
       (item.subcategoria && categoriaActiva === "Bebidas")
       ? item.subcategoria
       : item.categoria;
 
+    const badgeClase = (item.diasDisponibles && !disponibleHoy) ? "card-badge finde" : "card-badge";
+    const badgeMostrado = item.diasDisponibles ? "Sáb y Dom" : badgeTexto;
+
     const imagenHTML = item.imagen
       ? `
       <div class="card-img-wrap">
         <img src="${item.imagen}" alt="${item.nombre}" loading="lazy">
-        <div class="card-badge">${badgeTexto}</div>
+        <div class="${badgeClase}">${badgeMostrado}</div>
       </div>
       `
       : `
-      <div class="card-badge sin-imagen">${badgeTexto}</div>
+      <div class="${badgeClase} sin-imagen">${badgeMostrado}</div>
       `;
 
+    const avisoHTML = (item.diasDisponibles && !disponibleHoy)
+      ? `<div class="aviso-disponibilidad">🗓️ Disponible solo sábados y domingos</div>`
+      : "";
+
     menuContainer.innerHTML += `
-    <div class="card">
+    <div class="card${(item.diasDisponibles && !disponibleHoy) ? ' no-disponible' : ''}">
 
       ${imagenHTML}
 
       <div class="card-content">
         <h3>${item.nombre}</h3>
         <p>${item.descripcion || ''}</p>
+
+        ${avisoHTML}
 
         ${opcionesHTML}
 
@@ -1935,8 +1990,9 @@ function renderMenu(lista) {
           </div> 
           <button
             class="add-btn"
+            ${(item.diasDisponibles && !disponibleHoy) ? 'disabled' : ''}
             onclick="agregarCarrito(${gi}, this)">
-            + Agregar
+            ${(item.diasDisponibles && !disponibleHoy) ? 'No disponible hoy' : '+ Agregar'}
           </button>
         </div>
 
@@ -2117,6 +2173,13 @@ function leerOpciones(productoIdx) {
 let carrito = [];
 
 function agregarCarrito(index, btn) {
+  const producto = productos[index];
+
+  if (producto.diasDisponibles && !productoDisponibleHoy(producto)) {
+    showToast("⛔ Este producto solo está disponible sábados y domingos");
+    return;
+  }
+
   const { grupos, precioExtrasTotal } = leerOpciones(index);
 
   // Tomar el precio que se está mostrando en la tarjeta

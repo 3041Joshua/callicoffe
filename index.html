@@ -409,10 +409,12 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
     display:flex;
     gap:10px;
     margin:15px 0;
+    flex-wrap:wrap;
 }
 
 .pago-btn{
     flex:1;
+    min-width:110px;
     padding:14px;
     border:none;
     border-radius:12px;
@@ -515,7 +517,7 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
     <button class="filter-btn" data-cat="Boneless">Boneless</button>
     <button class="filter-btn" data-cat="Alitas">Alitas</button>
     <button class="filter-btn" data-cat="Papas">Papas</button>
-    <button class="filter-btn" data-cat="Especiales">Especiales </button>
+    <button class="filter-btn" data-cat="Especiales">Especiales 🎉</button>
     <button class="filter-btn" data-cat="Bebidas">Bebidas ▾</button>
   </div>
 
@@ -652,10 +654,14 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
         <button class="pago-btn" id="btnTransferencia" onclick="seleccionarPago('transferencia')">
           🏦 Transferencia
         </button>
+
+        <button class="pago-btn" id="btnTarjeta" onclick="seleccionarPago('tarjeta')">
+          💳 Tarjeta
+        </button>
       </div>
 
       <div id="datosEfectivo" class="datos-transferencia" style="display:block;">
-        <p>💛 ¿Pagarás en efectivo? Indícanos con cuánto pagarás. Así podremos llevar tu cambio listo y hacer tu entrega más cómoda</p>
+        <p>🤎 ¿Tu pago será en efectivo? Cuéntanos con cuánto vas a pagar para preparar tu cambio y hacer tu entrega más rápida. ¡Gracias!</p>
       </div>
 
       <div id="datosTransferencia" class="datos-transferencia" style="display:none;">
@@ -669,6 +675,10 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
         <small>
           Una vez realizada la transferencia envía el comprobante por WhatsApp.
         </small>
+      </div>
+
+      <div id="datosTarjeta" class="datos-transferencia" style="display:none;">
+        <p>💳 Al confirmar tu pedido te llevaremos a la página segura de Mercado Pago para pagar con tu tarjeta.</p>
       </div>
 
       <div class="envio-line">
@@ -688,7 +698,7 @@ footer { padding: 60px 5% 40px; background: var(--dark); text-align: center; col
         <strong>$<span id="total">0</span></strong>
       </div>
 
-      <button class="whatsapp-btn" onclick="enviarWhatsApp()">
+      <button class="whatsapp-btn" id="btnConfirmarPedido" onclick="confirmarPedido()">
         Enviar pedido por WhatsApp
       </button>
 
@@ -713,6 +723,20 @@ const picanteSalsas = {
 };
 
 const productos = [
+
+  /* ── ESPECIALES (solo sábados y domingos) ─────────────────── */
+
+  {
+    nombre: "Pozole",
+    categoria: "Especiales",
+    descripcion: "Rico pozole",
+    precio: 50,
+    imagen: "Pozole.jpeg",
+    diasDisponibles: [0, 6], // 0 = domingo, 6 = sábado
+    opciones: [
+      { label: "Salsa", tipo: "radio", items: ["Pollo", "Puerco", "Mixto"] }
+    ]
+  },
 
   /* ── DESAYUNOS ─────────────────────────────────────────── */
 
@@ -1275,20 +1299,6 @@ const productos = [
     precio: 35,
     imagen: "Papas_Gajo.jpeg",
     opciones: []
-  },
-
-    /* ── ESPECIALES (solo sábados y domingos) ─────────────────── */
-
-  {
-    nombre: "Pozole",
-    categoria: "Especiales",
-    descripcion: "Rico pozole",
-    precio: 50,
-    imagen: "Pozole.jpeg",
-    diasDisponibles: [0, 6], // 0 = domingo, 6 = sábado
-    opciones: [
-      { label: "Tipo", tipo: "radio", items: ["Pollo", "Puerco", "Mixto"] }
-    ]
   },
 
   /* ── BEBIDAS ────────────────────────────────────────────── */
@@ -1861,15 +1871,26 @@ function seleccionarPago(tipo){
 
     document.getElementById("btnEfectivo").classList.remove("active");
     document.getElementById("btnTransferencia").classList.remove("active");
+    document.getElementById("btnTarjeta").classList.remove("active");
+
+    document.getElementById("datosEfectivo").style.display="none";
+    document.getElementById("datosTransferencia").style.display="none";
+    document.getElementById("datosTarjeta").style.display="none";
+
+    const btnConfirmar = document.getElementById("btnConfirmarPedido");
 
     if(tipo=="efectivo"){
         document.getElementById("btnEfectivo").classList.add("active");
-        document.getElementById("datosTransferencia").style.display="none";
         document.getElementById("datosEfectivo").style.display="block";
-    }else{
+        btnConfirmar.textContent = "Enviar pedido por WhatsApp";
+    }else if(tipo=="transferencia"){
         document.getElementById("btnTransferencia").classList.add("active");
         document.getElementById("datosTransferencia").style.display="block";
-        document.getElementById("datosEfectivo").style.display="none";
+        btnConfirmar.textContent = "Enviar pedido por WhatsApp";
+    }else{
+        document.getElementById("btnTarjeta").classList.add("active");
+        document.getElementById("datosTarjeta").style.display="block";
+        btnConfirmar.textContent = "💳 Pagar con tarjeta";
     }
 
 }
@@ -2200,6 +2221,7 @@ function agregarCarrito(index, btn) {
   });
 
   actualizarCarrito();
+  guardarEstado();
 
   const resumen = Object.values(grupos).flat().map(o => o.texto);
   const extra   = resumen.length ? ` (${resumen.join(", ")})` : "";
@@ -2283,7 +2305,93 @@ function actualizarCarrito() {
 function eliminar(i) {
   carrito.splice(i, 1);
   actualizarCarrito();
+  guardarEstado();
 }
+
+/* ================================================================
+   GUARDAR / RESTAURAR CARRITO (para que no se pierda al volver
+   de Mercado Pago o al recargar la página por accidente)
+================================================================ */
+
+function guardarEstado() {
+  try {
+    const estado = {
+      carrito,
+      metodoPago,
+      tipoServicio,
+      nombre: document.getElementById("nombre").value,
+      telefono: document.getElementById("telefono").value,
+      direccion: document.getElementById("direccion").value,
+      notas: document.getElementById("notas").value
+    };
+    sessionStorage.setItem("calliEstadoPedido", JSON.stringify(estado));
+  } catch (e) {
+    console.error("No se pudo guardar el estado del pedido:", e);
+  }
+}
+
+function restaurarEstado() {
+  try {
+    // Si venimos de un pago exitoso en Mercado Pago, SÍ restauramos el
+    // pedido guardado (para tener nombre, dirección, carrito, etc.) y
+    // con esos datos armamos y mandamos el mensaje de WhatsApp.
+    const params = new URLSearchParams(window.location.search);
+    const pagoExitoso = params.get("pago") === "exito";
+
+    const guardado = sessionStorage.getItem("calliEstadoPedido");
+    if (!guardado) {
+      if (pagoExitoso) showToast("✓ ¡Pago recibido! Gracias por tu compra 🤎");
+      return;
+    }
+
+    const estado = JSON.parse(guardado);
+
+    if (Array.isArray(estado.carrito)) {
+      carrito = estado.carrito;
+    }
+
+    if (estado.nombre)    document.getElementById("nombre").value = estado.nombre;
+    if (estado.telefono)  document.getElementById("telefono").value = estado.telefono;
+    if (estado.direccion) document.getElementById("direccion").value = estado.direccion;
+    if (estado.notas)     document.getElementById("notas").value = estado.notas;
+
+    if (estado.tipoServicio) {
+      seleccionarServicio(estado.tipoServicio);
+    }
+    if (estado.metodoPago) {
+      seleccionarPago(estado.metodoPago);
+    }
+
+    actualizarCarrito();
+
+    if (pagoExitoso) {
+      sessionStorage.removeItem("calliEstadoPedido");
+      showToast("✓ ¡Pago recibido! Gracias por tu compra 🤎");
+
+      // Abrimos el carrito para que el pedido (ya con los datos
+      // restaurados) quede visible y el botón de WhatsApp a la mano.
+      toggleCart();
+
+      // Intentamos mandar el mensaje de WhatsApp automáticamente.
+      // Nota: algunos navegadores bloquean ventanas que se abren solas
+      // (no vienen de un clic directo), por eso dejamos el carrito
+      // abierto con el botón visible como respaldo para mandarlo manual.
+      setTimeout(() => enviarWhatsApp(), 400);
+    }
+  } catch (e) {
+    console.error("No se pudo restaurar el estado del pedido:", e);
+  }
+}
+
+// Guardar automáticamente cuando el cliente escribe sus datos
+["nombre", "telefono", "direccion", "notas"].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener("input", guardarEstado);
+});
+
+// Restaurar el pedido guardado en cuanto carga la página
+// (por ejemplo, al volver de Mercado Pago)
+restaurarEstado();
 
 function toggleCart() {
   document.getElementById("cart").classList.toggle("active");
@@ -2307,6 +2415,81 @@ function generarFechaHora() {
   let hora = ahora.toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit", hour12: true });
   hora = hora.replace(/AM/i, "a. m.").replace(/PM/i, "p. m.");
   return fecha + " · " + hora;
+}
+
+/* ================================================================
+   CONFIRMAR PEDIDO (decide entre WhatsApp o Tarjeta)
+================================================================ */
+
+// 👉 URL de tu backend en Vercel (la que termina en /api/crear-pago)
+const MP_BACKEND_URL = "https://callipruebas-pagos.vercel.app/api/crear-pago";
+
+function confirmarPedido() {
+  if (metodoPago === "tarjeta") {
+    pagarConTarjeta();
+  } else {
+    enviarWhatsApp();
+  }
+}
+
+async function pagarConTarjeta() {
+  if (carrito.length === 0) { showToast("Tu carrito está vacío"); return; }
+
+  const nombre    = document.getElementById("nombre").value.trim();
+  const direccion = document.getElementById("direccion").value.trim();
+
+  if (!nombre) { showToast("Por favor ingresa tu nombre"); return; }
+  if (tipoServicio === "domicilio" && !direccion) { showToast("Por favor ingresa tu dirección"); return; }
+
+  const idPedido = generarIdPedido();
+
+  // Armamos la lista de productos para Mercado Pago
+  const items = carrito.map(item => ({
+    nombre: item.nombre,
+    cantidad: 1,
+    precio: item.precioFinal
+  }));
+
+  // Agregamos el envío como un producto más, si aplica
+  const subtotal = carrito.reduce((acc, item) => acc + item.precioFinal, 0);
+  const envio = calcularEnvio(subtotal);
+  if (envio > 0) {
+    items.push({ nombre: "Envío a domicilio", cantidad: 1, precio: envio });
+  }
+
+  const btnConfirmar = document.getElementById("btnConfirmarPedido");
+  const textoOriginal = btnConfirmar.textContent;
+  btnConfirmar.textContent = "Generando pago...";
+  btnConfirmar.disabled = true;
+
+  try {
+    const resp = await fetch(MP_BACKEND_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items, idPedido })
+    });
+
+    const data = await resp.json();
+
+    if (!resp.ok || !data.init_point) {
+      console.error("Error creando el pago:", data);
+      showToast("No se pudo generar el pago. Intenta de nuevo.");
+      btnConfirmar.textContent = textoOriginal;
+      btnConfirmar.disabled = false;
+      return;
+    }
+
+    // Redirigimos al cliente a la página segura de Mercado Pago
+    // Guardamos el estado justo antes de salir a Mercado Pago
+    guardarEstado();
+    window.location.href = data.init_point;
+
+  } catch (err) {
+    console.error(err);
+    showToast("Error de conexión. Intenta de nuevo.");
+    btnConfirmar.textContent = textoOriginal;
+    btnConfirmar.disabled = false;
+  }
 }
 
 function enviarWhatsApp() {
@@ -2366,9 +2549,11 @@ function enviarWhatsApp() {
   msg += "Total: $" + total.toFixed(2) + "\n\n";
 
   msg += "💳 Método de pago\n";
-  msg += (metodoPago == "efectivo" ? "Efectivo" : "Transferencia") + "\n";
+  msg += (metodoPago == "efectivo" ? "Efectivo" : metodoPago == "transferencia" ? "Transferencia" : "Tarjeta (pagado en línea)") + "\n";
   if (metodoPago == "transferencia") {
     msg += "📌 Enviaré el comprobante de transferencia por WhatsApp.\n";
+  } else if (metodoPago == "tarjeta") {
+    msg += "✅ Pago ya realizado en línea con Mercado Pago.\n";
   }
 
   if (notas) {
@@ -2378,6 +2563,7 @@ function enviarWhatsApp() {
   msg += "\n✨ Gracias por tu pedido. En cuanto recibamos este mensaje, comenzaremos a prepararlo. ¡Nos vemos pronto! 🤎☕";
 
   window.open("https://wa.me/522207315160?text=" + encodeURIComponent(msg));
+  sessionStorage.removeItem("calliEstadoPedido");
 }
 
 /* ================================================================
